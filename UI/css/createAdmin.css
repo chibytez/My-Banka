@@ -1,0 +1,162 @@
+body{
+    background-color: #ffffff;
+    height: 100%;
+    margin:0;
+    padding:0;
+}
+
+
+#menu-items{
+    width:80% ;
+    border:1px solid black;
+    height: 30%;
+}
+
+.account span{
+    display:block;
+   }
+   #profileDiv{
+       margin-top:20px;
+       margin-bottom:50px;
+   }
+  
+    .accountFormHeader {
+       font-size: 20px;
+       font-weight: bold;
+       margin: auto;
+       color: #4484CE;
+       padding: 10px;
+       text-align: center;
+       box-sizing: border-box;
+   }
+   label {
+       margin-right: 15%;
+       color: #4484CE;
+       font-size: 20px;
+       padding: 80px;
+       box-sizing: border-box;
+   }
+   input[type=text] ,input[type=email]{
+    width: 80%;
+    padding: 12px 20px;
+    margin: 2% 10% 2% 10%;
+    font-size: 15px;
+    box-sizing: border-box;
+    background: transparent;
+    cursor:text;
+
+    
+}
+input[type=checkbox]{
+    color: #4484CE;
+    padding: 80px;
+    margin-left: 80px;
+}
+textarea{
+    vertical-align:top;
+    width: 60%;
+    resize: none;
+    padding: 12px 20px;
+    margin: 0 auto 0 auto;
+    font-size: 20px;
+    box-sizing: border-box;
+    background: transparent;
+    border: 1px solid  white;
+}
+   button[type="submit"] {
+       background: #4484CE;
+       width:10%;
+       padding: auto;
+       font-size: 20px;
+       margin: 10px 40% ;
+       border: 1px solid #4484CE;
+       border-radius: 3px;
+       align-content: center;
+   }
+   footer {
+       position: fixed;
+       left: 0;
+       bottom: 0;
+       width: 100%;
+       height: 5%;
+       padding-top: 10px;
+       padding-bottom: 10px;
+       background-color:#4484CE;
+       text-align: center;
+       color: #dff;
+   }
+   @media(max-width: 550px) {
+   #dailyEntry {
+    width:90%;
+    height: 600px;
+   }
+   #counter{
+    width:80%;
+    height: 90px;
+    font-size:15px;
+   }
+  #dailyEntry form{
+    width: 90%;
+    background-color:#ffffff;
+  }
+  .accountFormHeader {
+    font-size: 16px;
+    margin: auto;
+}
+
+button[type="submit"] {
+    background: #4484CE;
+    width:10%;
+    padding: auto;
+    font-size: 20px;
+    margin: 10px 40% ;
+    border: 1px solid #4484CE;
+    border-radius: 3px;
+    text-align: center;
+}
+
+button[type="submit"]:hover {
+    background: #f28e53;
+    border: 1px solid #f28e53;
+
+}
+
+#header {
+    padding-top: 70px;
+    clear:both;
+    background-position:center;
+    background-size:cover;
+    color:rgb(22, 18, 18);
+    height:600px;
+    text-align:center
+  }
+
+
+
+  
+
+#center{
+    text-align: center;
+}
+
+#item{
+    text-align: center;
+}
+
+footer {
+    background:#4484CE;
+    background-repeat: no-repeat;
+    background-position: center top;
+    color:rgb(14, 13, 13);
+    font-family:Kavivanar; 
+    line-height: 50px;
+    margin:0 auto;
+    position: fixed;
+    text-align:center;
+    bottom: 0;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+    width: 100%;
+    overflow: hidden;
+   }
