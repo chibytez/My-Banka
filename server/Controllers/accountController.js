@@ -27,7 +27,7 @@ const accounts = [{
     lastName:'Adebayo',
     accountNumber: '6583267634',
     email:'adam@gmail.com',
-    owner: '3',
+    owner: '4',
     type:'savings',
     status:'dorn',
     balance:'#39,000'
