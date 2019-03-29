@@ -1,4 +1,3 @@
-
 export const accounts = [{
     id:1,
     accountNumber: '6543267634',
@@ -34,17 +33,14 @@ export const accounts = [{
 }
 ];
 
-export const createAccount =(req, res) => {
-    const account = {
-        id: accounts.length + 1,
-        firstName:req.body.firstName,
-        lpastName:req.body.lastName,
-        accountNumber: req.body.accountNumber,
-        email: req.body.email,
-        type:req.body.type,
-        openingBalance:req.body.openingBalance
+export const activateDeactivateAccount = (req, res) => {
+    const account = accounts.find((r) => r.id === parseInt(req.params.id));
+    if (!account) {
+        return res.status(404).
+        send('The account with the given ID was not found.');
     }
-    accounts.push(account);
-    res.status(201);
+    account.requesting = req.body.requesting;
+    account.accountNumber = req.body.accountNumber;
+    account.status= req.body.status;
     res.send(account);
 };
