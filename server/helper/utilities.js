@@ -1,4 +1,3 @@
-
 export const accounts = [{
     id:1,
     accountNumber: '6543267634',
@@ -33,18 +32,3 @@ export const accounts = [{
     balance:'#39,000'
 }
 ];
-
-export const createAccount =(req, res) => {
-    const account = {
-        id: accounts.length + 1,
-        firstName:req.body.firstName,
-        lpastName:req.body.lastName,
-        accountNumber: req.body.accountNumber,
-        email: req.body.email,
-        type:req.body.type,
-        openingBalance:req.body.openingBalance
-    }
-    accounts.push(account);
-    res.status(201);
-    res.send(account);
-};

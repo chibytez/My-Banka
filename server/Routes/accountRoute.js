@@ -3,8 +3,8 @@ import {
      } from '../Controllers/accountController';
 
 
-const accountRoutes = (app) => {
-    app.post('/api/v1/accounts',createAccount);
+const accountRoute = (app) => {
+    app.post('/api/v1/accounts',createAccount)
 }
 
-export default accountRoutes;
+export default accountRoute;
