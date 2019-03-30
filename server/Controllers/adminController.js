@@ -44,3 +44,17 @@ export const activateDeactivateAccount = (req, res) => {
     account.status= req.body.status;
     res.send(account);
 };
+
+export const deleteBankAccount = (req, res) => {
+    const account = accounts.find((r) => r.id === parseInt(req.params.id));
+    if (!account) {
+        return res.status(404).
+        send('The request with the given ID was not found.');
+    }
+
+    const index = accounts.indexOf(account);
+    accounts.splice(account, 1);
+
+    res.status(201);
+    res.send(account);
+};
