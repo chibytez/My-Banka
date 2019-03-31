@@ -1,10 +1,12 @@
 import accountRoute from './accountRoute';
 import adminRoute from './adminRoute';
+import auth from './authRoute';
 
 const routes = (app) => {
 
     accountRoute(app);
     adminRoute(app);
+    auth(app);
 
     app.get('/', (req, res) => res.status(200).json({
         message: 'My Banka'
