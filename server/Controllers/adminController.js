@@ -98,6 +98,14 @@ export const getAllAccounts = (req, res) => {
     res.status(200);
 };
 
+export const getAccountById =(req, res) => {
+    const account = accounts.find((r) => r.id === parseInt(req.params.id));
+    if (!account) {
+        return res.status(404).send('The account with the given ID was not found.');
+    }
+    res.send(account);
+};
+
 export const creditDebitAccount =(req, res) => {
     const transaction = {
         id: transactions.length + 1,
