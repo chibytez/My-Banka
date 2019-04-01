@@ -93,6 +93,11 @@ export const deleteBankAccount = (req, res) => {
     res.send(account);
 };
 
+export const getAllAccounts = (req, res) => {
+    res.send(accounts);
+    res.status(200);
+};
+
 export const creditDebitAccount =(req, res) => {
     const transaction = {
         id: transactions.length + 1,
