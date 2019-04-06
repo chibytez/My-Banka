@@ -8,11 +8,11 @@ import {
 
 
 const adminRoute = (app) => {
-    app.patch('/api/v1/account/:id', activateDeactivateAccount);
-    app.delete('/api/v1/accounts/:id', deleteBankAccount);
-    app.post('/api/v1/transactions/:id', creditDebitAccount);
+    app.patch('/api/v1/account/:accountNumber', activateDeactivateAccount);
+    app.delete('/api/v1/accounts/:accountNumber', deleteBankAccount);
+    app.post('/api/v1/transactions/:accountNumber', creditDebitAccount);
     app.get('/api/v1/accounts', getAllAccounts);
-    app.get('/api/v1/accounts/:id', getAccountById)
+    app.get('/api/v1/accounts/:accountNumber', getAccountById)
 }
 
 export default adminRoute;
