@@ -19,11 +19,15 @@
   },
   "homepage": "https://github.com/chibytez/My-Banka#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "jol": "^0.1.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "nodemon": "^1.18.10",
+    "validator": "^10.11.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
