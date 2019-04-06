@@ -12,7 +12,9 @@ const generateToken = (id, email, isAdmin, type) => {
   });
 
   return token;
+
 };
+
 
 
 export default generateToken;

@@ -16,3 +16,11 @@ export const createAccount =(req, res) => {
     res.send(account);
 };
 
+export const userGetAccount =(req, res) => {
+    const account = accounts.find((r) => r.accountNumber === parseInt(req.params.accountNumber));
+    if (!account) {
+        return res.status(404).send('The account with the given ID was not found.');
+    }
+    res.send(account);
+};
+
