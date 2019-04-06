@@ -3,7 +3,6 @@ import generateToken from "../middleware/genToken";
 require('dotenv').config();
 
 
-
 class UserController {
     static signUp(req, res) {
         const { email, firstName, lastName, phoneNumber, password, type, isAdmin, } = req.body;
