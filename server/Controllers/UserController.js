@@ -3,8 +3,8 @@ import generateToken from "../middleware/genToken";
 require('dotenv').config();
 
 
-class UserController {
-    static signUp(req, res) {
+
+    export const signUp = (req, res) => {
         const { email, firstName, lastName, phoneNumber, password, type, isAdmin, } = req.body;
         const user = {
             id: users.length + 1,
@@ -32,14 +32,16 @@ class UserController {
                 token,
             },
         });
-    }
-    static getUser(req, res) {
+    };
+    
+    export const getUser =(req, res) => {
         res.status(201).json({
             status: '200',
             data: users,
         });
-    }
-    static login(req, res) {
+    };
+
+    export const login = (req, res) => {
         const { email, password, } = req.body;
         const currentUser = users.find(user => user.email === email && user.password === password);
         if (currentUser) {
@@ -63,7 +65,4 @@ class UserController {
             status: '404',
             error: 'Username or Password is Incorrect',
         });
-    }
-}
-
-export default UserController;
+    };

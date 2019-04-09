@@ -1,10 +1,14 @@
-import UserController from "../Controllers/UserController.1";
+import {
+    signUp,
+    login,
+    getUser
+} from "../Controllers/UserController";
 
 const auth = (app) => {
 
-    app.post('/auth/signUp', UserController.signUp);
-    app.post('/auth/login', UserController.login);
-    app.get('/auth/getUsers',UserController.getUser)
+    app.post('/api/v1/auth/signUp', signUp);
+    app.post('/api/v1/auth/login', login);
+    app.get('/api/v1/auth/getUsers', getUser)
 
 }
 
