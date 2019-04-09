@@ -6,7 +6,8 @@
   "scripts": {
     "test": " nyc mocha ./server/test/*.spec.js --require babel-register --exit",
     "start:dev": " nodemon  app.js --exec babel-node --presets es2015",
-    "start": "babel-node app.js --exec  --presets es2015"
+    "start": "babel-node app.js --exec  --presets es2015",
+    "coverage": "nyc npm test && nyc report --reporter=text-lcov  | coveralls "
   },
   "repository": {
     "type": "git",
