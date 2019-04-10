@@ -3,12 +3,11 @@ node_js:
   - "10.8.0"
 install:
   - npm install
-
-  script:
-  - npm test
-  -npm run coverage
-
-
-after_script:
-   - npm run coverage
-   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+env:
+  global:
+SECRET_KEY = chibyke
+    - "node_modules"
+script:
+ - npm test
+after_success:
+- npm run coveralls
