@@ -7,6 +7,10 @@ install:
 env:
   global:
     - SECRET_KEY = chibyke
+
+cache:
+  directories:
+    - "node_modules"
 script:
  - npm test
 after_success:
