@@ -5,6 +5,7 @@ install:
   - npm install
 
 env:
+  global:
     - SECRET_KEY = chibyke
 script:
  - npm test
