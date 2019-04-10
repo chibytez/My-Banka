@@ -3,10 +3,9 @@ node_js:
   - "10.8.0"
 install:
   - npm install
+
 env:
-  global:
-SECRET_KEY = chibyke
-    - "node_modules"
+    - SECRET_KEY = chibyke
 script:
  - npm test
 after_success:
