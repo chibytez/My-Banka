@@ -4,7 +4,8 @@ node_js:
 install:
   - npm install
 
-env: SECRET_KEY = chibyke
+env: 
+- SECRET_KEY = chibyke
 
 cache:
   directories:
@@ -12,4 +13,4 @@ cache:
 script:
  - npm test
 after_success:
-- npm run coveralls
+- npm run coverage
