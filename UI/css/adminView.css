@@ -57,26 +57,7 @@ body{
     border-bottom: 1px solid #d8bfd8;
 }
 
-td.approved {
-    background: #aef0b2;
-    text-align: center;
-}
 
-td.pending {
-    background: #bebebe;
-    text-align: center;
-}
-
-td.resolved {
-    background: #d8bfd8;
-    text-align: center;
-}
-
-td.disapproved {
-    background: #b16464;
-    text-align: center;
-    color: white;
-}
 
 .table th {
     border-bottom: 1px solid #d8bfd8;
@@ -188,35 +169,26 @@ ul.admin-btn {
     border: 1px solid transparent;
 }
 
-.btn-approve {
+.btn-credit {
     background: #aef0b2;
     color: #363851;
 }
 
-.btn-approve:hover {
+.btn-credit:hover {
     background: #9ad99e;
     color: #363851;
 }
 
-.btn-disapprove {
-    border: 1px solid #ff4f4f;
-    color: #ff4f4f;
+.btn-debit {
+    background:  #e48b7c;
+    color: #313c47;
 }
 
-.btn-disapprove:hover {
-    background: #ff4f4f;
-    color: #fff;
-}
-
-.btn-resolve {
-    border: 1px solid #1e90ff;
-    color: #1e90ff;
-}
-
-.btn-resolve:hover {
+.btn-debit:hover {
     background: #1e90ff;
     color: #fff;
 }
+
 
 footer {
     background:#4484CE;
