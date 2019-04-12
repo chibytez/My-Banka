@@ -3,13 +3,8 @@ node_js:
   - "10.8.0"
 install:
   - npm install
-
-env: 
+  env: 
 - SECRET_KEY = chibyke
-
-cache:
-  directories:
-    - "node_modules"
 script:
  - npm test
 after_success:
