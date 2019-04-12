@@ -7,7 +7,7 @@ const generateToken = (id, email, isAdmin, type) => {
     isAdmin,
     type,
   },
-  "chibyke", {
+  process.env.SECRET_KEY, {
     expiresIn: '24h',
   });
 
