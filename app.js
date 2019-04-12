@@ -6,7 +6,7 @@ import winston from 'winston';
 import router from './server/Routes';
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
