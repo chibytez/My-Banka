@@ -1,10 +1,11 @@
 import {
-     createAccount
+     createAccount,
+     userGetAccount
      } from '../Controllers/accountController';
 
 
-const accountRoutes = (app) => {
+const accountRoute = (app) => {
     app.post('/api/v1/accounts',createAccount);
 }
 
-export default accountRoutes;
+export default accountRoute;
