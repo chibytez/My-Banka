@@ -4,69 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/userCreateAccount.css">
 </head>
 <body>
-    <div class="menu-links">
-        <div id="menu-links-left">
-          <span><a href="index.html">My-Banka</a></span>
-        </div>
-        <div class="menu-icon">
-    
-         <label for="menu-check">
-            <span></span>
-            <span></span>
-            <span></span>
-          </label>
-          
-        </div>
-    
-              <input type="checkbox" id="menu-check">
-              <div class="menu-links-right">
-               
-                <a href="userViewProfile.html">User Profile</a>
-                <a href="index.html">log out</a>
-              </div>      
-            </div>
+        <div class="menu-links">
+                <div id="menu-links-left">
+                  <span><a href="index.html">My-Banka</a></span>
+                </div>
+                <div class="menu-icon">
+            
+                 <label for="menu-check">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </label>
+                  
+                </div>
+            
+                      <input type="checkbox" id="menu-check">
+                      <div class="menu-links-right">
+                       
+                        <a href="userViewProfile.html">User Profile</a>
+                        <a href="index.html">Log Out</a>
+                      </div>      
+                    </div>
+                    <div class="blue" >
+                    <header id="header">
             <div class="container">
-<header id="header">
+                <div class="main">  
+                  <h2> Create Bank Account</h2>
+        
+                
+                  <form id="form_id" method="post" name="myform">
+                  <hr>
+                     
+                      <input type="text" required autocomplete="off" placeholder= "Email" id="email" required/>
+                
+                     
+                      <input type="number"required autocomplete="off" placeholder="First Name" id="firstname" required/>
+        
+                   
+                    <input type="text"required autocomplete="off" placeholder="Last Name" id="lastname" required/>
+                  
+                    
+                    <input type="password"required autocomplete="off" placeholder="State Of Origin" id="stateoforigin" required/>
+        
+                    <input type="password"required autocomplete="off" placeholder="BVN" id="bvn" '
+                    
+                    
+                    />
+                  
+                  
+                  <button type="submit" id="submit">Create</button>
+                  
+                  </form>
+                </div>
+                </div>
+              </header>
+            </div>
+            <div class="spacer">
 
-
-    <div id="profileDiv">
-        <form class="account">
-          <p >
-                  <span> <h1  class="accountFormHeader">Create Bank Account</h1></span>
-          </p>
-          
-          <p>
-                  <span><label for="email"></label></span>
-                  <input type="email" id="email" name="email" placeholder="Email"  readonly>
-          </p>
-          <p>
-               <span><label for="firstname"></label></span>
-               <input type="text" id="firstname" name="firstname" placeholder="First Name"  readonly>
-          </p>
-          <p>
-               <span><label for="lastname"></label></span>
-               <input type="text" id="lastname" name="lastname" placeholder="Last Name"  readonly >
-          </p>
-          <p>
-                <span><label for="lastname"></label></span>
-                <input type="text" id="lastname" name="lastname" placeholder="State Of Origin"  readonly >
-           </p>
-           <p>
-                <span><label for="lastname"></label></span>
-                <input type="text" id="lastname" name="lastname" placeholder="BVN"  readonly >
-           </p>
-          <button type="submit" name="save" id="submitEntry">Create</button>
-        </form>
-</div>
-</header>
-</div>
-<footer>
-<p>My-Banka, Copyright &copy; 2019</p>
-</footer> 
+            </div>
+            <footer>
+                <p>My-Banka, Copyright &copy; 2018</p>
+              </footer>  
 </body>
 </html>

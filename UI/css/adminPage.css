@@ -3,6 +3,7 @@ body{
     height: 100%;
     margin:0;
     padding:0;
+    font-family: Helvetica;
 }
 
 
@@ -34,30 +35,18 @@ body{
     margin-left:auto;
     margin-right: auto;
 } 
-#header {
-    padding-top: 70px;
-    clear:both;
-    background-position:center;
-    background-size:cover;
-    color:rgb(22, 18, 18);
-    height:600px;
-    text-align:center
-  }
 
 table{
    
     width: 100%;
     text-align: center;
-    background-color: rgb(230, 238, 240);
     margin: 10px 0 15px;
     padding: 10px;
-    border-bottom: 1px solid #d8bfd8;
    }
 
      td{
       text-align: center;
       height: 40px;
-       /* width: 16.6px; */
        
    }
 
@@ -72,30 +61,36 @@ table{
     padding: 5px 5px 5px 0;
     background: #eeeeee;
     height: 40px;
-    /* text-align: center;
-    width: 16.6px;
-    border: 1px solid rgb(156, 146, 146);
-       background-color: rgb(224, 218, 206);
-        */
+   
    }
 
    .activate{
        background-color: rgb(7, 102, 11);
        border: 2px ;
        border-radius: 30px;
+       color: white;
 
    }
    .deactivate{
        background-color: rgb(206, 24, 24);
        border: 2px ;
        border-radius: 30px;
-   }
+       color: white;
+   } 
    .pending{
        background-color: rgb(134, 113, 112);
        border: 2px ;
        border-radius: 30px;
    }
   
+   select{
+       border-radius: 30px;
+       height: 80%;
+       background-color: #4484CE;
+       color: white;
+       font-size:12px;
+
+   }
 
    .pagination li {
     display: block;
@@ -136,7 +131,7 @@ footer {
     background-repeat: no-repeat;
     background-position: center top;
     color:rgb(14, 13, 13);
-    font-family:Kavivanar; 
+    font-family:Helvetica; 
     line-height: 50px;
     margin:0 auto;
     position: fixed;

@@ -2,7 +2,7 @@
 
 body {
     background:#ffffff;
-    font-family:Garamond;
+    font-family:Helvetica;
     line-height:1.5;
     margin:0;
     padding:0;
@@ -41,7 +41,8 @@ body {
   }
   
   #header h1 {
-    /* border-bottom:2px solid #FF8C00; */
+   padding-top:10%;
+   
     margin-bottom:10px;
     margin-top:200px
   }
@@ -49,15 +50,16 @@ body {
   .btn-signup {
     background:#4484CE;
     border:none;
-    border-radius:8px;
+    border-radius: 3px;
     color:#fff;
     font-size:1em;
     font-weight:bold;
     outline:none;
-    padding:15px 15px;
-    transition:.5s;
-    width:400px
+    padding: 0.625rem 2.85rem;
+    transition: all 500ms;
   }
+ 
+  
   
   .btn-signup:hover {
     background:#3a75c2;
@@ -120,7 +122,8 @@ body {
   }
   #wooden{
     background: rgba(236, 227, 233, 0.6);
-    margin: 0 auto;
+    margin: 0 auto; 
     width:40%;
+    height:200px;
   
   }

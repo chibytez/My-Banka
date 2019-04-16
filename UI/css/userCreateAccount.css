@@ -1,248 +1,144 @@
-body{
-    background-color: #ffffff;
-    height: 100%;
+ 
+html,body{
+    background:#ffffff;
     margin:0;
     padding:0;
-}
-
-
-#menu-items{
-    width:80% ;
-    border:1px solid black;
-    height: 30%;
-}
-#myBtn{
-    border: 2px solid black;
-    border-radius: 50px;
-}
-
-.tab{
-    width:80%;
-    margin-top: 50px;
-    margin-left:auto;
-    margin-right: auto;
-} 
-#header {
-    padding-top: 70px;
-    clear:both;
-    background-position:center;
-    background-size:cover;
-    color:rgb(22, 18, 18);
-    height:600px;
-    text-align:center
+    font-family: Helvetica;
   }
-
-  .wrapper {
-    width: 70%;
-    margin: 0 auto;
-    min-height: 100vh;
-}
-
-.request-wrapper {
-    padding: 0 2%;
-    background: #F7F7F7;
-    border-radius: 3px;
-    width: 70%;
-    margin: 50px auto;
-    border-bottom: 1px solid #bebebe;
-    box-shadow: 1px 4px 10px #bebebe;
-}
-
-
-.btn {
-    transition: all 500ms;
-    border-radius: 3px;
-    background: transparent;
-    padding: 0.5rem 0.85rem;
-    color: #363851;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 1;
-    margin: 10px 0;
-}
-
-.btn-sm {
-    cursor: pointer;
-    border: 1px solid #9c9c9c;
-    border-radius: 3px;
-    padding: 0.35rem 0.85rem;
-    color: #363851;
-}
-
-.btn-primary {
-    background: #363851;
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #17192a;
-}
-
-.btn-edit {
-    background: #d8bfd8;
-    color: #363851;
-}
-
-.btn-delete:hover {
-    background: #7e3b3b;
-}
-
-.btn-delete {
-    color: white;
-    background: #b16464;
-}
-
-.btn-default:hover {
-    background: #111130;
-    color: #fff;
-}
-
-.btn-default {
-    background: #363851;
-    color: #fff;
-    border: 1px solid transparent;
-}
-
-.btn-approve {
-    background: #aef0b2;
-    color: #363851;
-}
-
-.btn-approve:hover {
-    background: #9ad99e;
-    color: #363851;
-}
-
-.btn-disapprove {
-    border: 1px solid #ff4f4f;
-    color: #ff4f4f;
-}
-
-.btn-disapprove:hover {
-    background: #ff4f4f;
-    color: #fff;
-}
-
-.btn-resolve {
-    border: 1px solid #1e90ff;
-    color: #1e90ff;
-}
-
-.btn-resolve:hover {
-    background: #1e90ff;
-    color: #fff;
-}
-.account span{
-    display:block;
-   }
-   #profileDiv{
-       margin-top:20px;
-       margin-bottom:50px;
-   }
-  
-    .accountFormHeader {
-       font-size: 20px;
-       font-weight: bold;
-       margin: auto;
-       /* color: #4484CE; */
-       padding: 10px;
-       text-align: center;
-       box-sizing: border-box;
-   }
-   label {
-       margin-right: 15%;
-       /* color: #4484CE; */
-       font-size: 20px;
-       padding: 80px;
-       box-sizing: border-box;
-   }
-   input[type=text] ,input[type=email]{
-    width: 80%;
-    padding: 12px 20px;
-    margin: 2% 10% 2% 10%;
-    font-size: 15px;
-    box-sizing: border-box;
-    background: transparent;
-    cursor:text;
-
+  #header {
+      padding-top: 70px;
+      clear:both;
+      background-position:center;
+      background-size:cover;
+      color:#080808;
+      height:100%;
+      text-align:center
+    }
     
-}
-input[type=checkbox]{
-    color: #4484CE;
-    padding: 80px;
-    margin-left: 80px;
-}
-textarea{
-    vertical-align:top;
-    width: 60%;
-    resize: none;
-    padding: 12px 20px;
-    margin: 0 auto 0 auto;
-    font-size: 20px;
-    box-sizing: border-box;
-    background: transparent;
-    border: 1px solid  white;
-}
-   button[type="submit"] {
-       background: #4484CE;
-       width:10%;
-       padding: auto;
-       font-size: 20px;
-       margin: 10px 40% ;
-       border: 1px solid ;
-       border-radius: 3px;
-       align-content: center;
-   }
+    #header h1 {
+   
+      margin-bottom:10px;
+      margin-top:200px
+    }
   
-   @media(max-width: 550px) {
-   #dailyEntry {
-    width:90%;
-    height: 600px;
-   }
-   #counter{
-    width:80%;
-    height: 90px;
-    font-size:15px;
-   }
-  #dailyEntry form{
-    width: 90%;
-    background-color:#ffffff;
+  .blue{
+      display: flex;
+      text-align: center;
+      justify-content: center; 
+      background-color: #ffffff;
   }
-  .accountFormHeader {
-    font-size: 16px;
-    margin: auto;
-}
-label {
-    align-content: center;
-    padding: 10px;
-    font-size: 20px;
-}
-  input[type=text] ,input[type=email]{
-    width: 90%;
-    padding: 5px;
-    margin: 5px;
-    font-size: 10px;
-    
-}
-input[type=checkbox]{
-    color: #4484CE;
-    margin-left: 0px;
-}
-
-   }
-
-footer {
-    background:#4484CE;
-    background-repeat: no-repeat;
-    background-position: center top;
-    bottom: -20px;
-    color:#fff;
-    font-family:Kavivanar;
-    height:50px; 
-    line-height: 50px;
-    margin-top:50px;
-    position: fixed;
-    text-align:center;
-    width: 100%;
-    padding-bottom: 0;
-   }
+  
+  h2{
+   background-color: #4484CE;
+   color: rgb(255, 249, 249);
+   padding: 10px 35px;
+   margin: -10px -50px;
+   text-align:center;
+   border-radius: 10px 10px 0 0;
+  }
+   
+  hr{
+   margin: 10px -50px;
+   border: 0;
+   border-top: 1px solid #ccc;
+   margin-bottom: 40px;
+  }
+   
+  div.container{ 
+      display: flex;
+      text-align: center;
+      justify-content: center; 
+   height: auto;
+   font-family: Helvetica;
+   margin-bottom: 35px;
+  }
+   
+  div.main{
+   width: 300px;
+   padding: 10px 50px 25px;
+   border: 2px solid gray;
+   border-radius: 10px;
+   font-family: raleway;
+   float:left;
+   margin-top:50px;
+  }
+  
+  input[type=text],input[type=password],input[type=number]{
+   width: 100%;
+   height: 40px;
+   padding: 5px;
+   margin-bottom: 25px;
+   margin-top: 5px;
+   border: 2px solid #ccc;
+   color: #4f4f4f;
+   font-size: 16px;
+   border-radius: 5px;
+  }
+  
+  label{
+   color: #464646;
+   text-shadow: 0 1px 0 #fff;
+   font-size: 14px;
+   font-weight: bold;
+  }
+  
+  center{
+   font-size:32px;
+  }
+  
+  .note{
+   color:red;
+  }
+   
+  .valid{
+   color:green;
+  }
+  
+  .back{
+   text-decoration: none;
+   border: 1px solid rgb(0, 143, 255);
+   background-color: rgb(0, 214, 255);
+   padding: 3px 20px;
+   border-radius: 2px;
+   color: black;
+  }
+   
+  button{
+      font-size: 16px;
+      background-color: #4484CE;
+      background: ;
+      border: 1px solid #f7f4ee;
+      color: rgb(247, 244, 240);
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 5px;
+      padding: 10px 0;
+      outline:none;
+     }
+      
+     input[type=button]:hover{
+      background-color: rgb(157, 196, 240);
+     }
+     .spacer{
+         height: 50px;
+     }
+     footer {
+      background:#4484CE;
+      background-repeat: no-repeat;
+      background-position: center top;
+      color:rgb(14, 13, 13);
+      font-family:Kavivanar; 
+      line-height: 50px;
+      margin:0 auto;
+      position: fixed;
+      text-align:center;
+      bottom: 0;
+      left: 0;
+      bottom: 0;
+      height: 50px;
+      width: 100%;
+      overflow: hidden;
+     }
+  
+     
