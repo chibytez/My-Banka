@@ -13,7 +13,14 @@ export const activateDeactivateAccount = (req, res) => {
     res.status(200);
 };
 
-export const deleteBankAccount = (req, res) => {
+export /**
+ *
+ *
+ * @param {obj} req
+ * @param {*} res
+ * @returns
+ */
+const deleteBankAccount = (req, res) => {
     const account = accounts.find((r) => r.accountNumber === parseInt(req.params.accountNumber));
     if (!account) {
         return res.status(404).

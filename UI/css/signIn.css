@@ -2,6 +2,7 @@ html,body{
     margin:0;
     padding:0;
     background-color: #ffffff;
+    font: 1em Helvetica;
 }
 .blue{
     display: flex;
@@ -13,6 +14,7 @@ html,body{
 
 h2{
  background-color: #4484CE;
+ color: rgb(250, 244, 244);
  padding: 30px 35px;
  margin: -10px -50px;
  text-align:center;
@@ -32,8 +34,7 @@ div.container{
     justify-content: center; 
  height: auto;
  margin-top:8%;
- /* margin:35px auto; */
- font-family: 'Raleway', sans-serif;
+ font-family: Helvetica;
 }
  
 div.main{
@@ -41,7 +42,7 @@ div.main{
  padding: 10px 50px 25px;
  border: 2px solid gray;
  border-radius: 10px;
- font-family: raleway;
+ font-family: Helvetica;
  float:left;
  margin-top:50px;
 }
@@ -71,7 +72,7 @@ button{
  font-size: 16px;
  background-color: #4484CE;
  border: 1px solid #f7f4ee;
- color: rgb(0, 0, 0);
+ color: rgb(252, 249, 249);
  font-weight: bold;
  cursor: pointer;
  width: 100%;

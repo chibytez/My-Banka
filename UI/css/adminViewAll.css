@@ -3,6 +3,7 @@ body{
     height: 100%;
     margin:0;
     padding:0;
+    font-family: Helvetica; 
 }
 
 
@@ -48,10 +49,8 @@ table{
    
     width: 100%;
     text-align: center;
-    background-color: rgb(230, 238, 240);
     margin: 10px 0 15px;
     padding: 10px;
-    border-bottom: 1px solid #d8bfd8;
    }
 
      td{
@@ -79,12 +78,20 @@ table{
        background-color: rgb(238, 31, 20);
        border: 2px ;
        border-radius: 30px;
+       width:90%;
+       height: 90%;
+       color: white;
+       font-size:12px;
    }
    .view{
        background-color: rgb(129, 190, 218);
        border: 2px ;
        border-radius: 30px;
-       width: 60%;
+       width: 90%;
+       height: 90%;
+       color: white;
+       font-size:12px;
+
    }
 
    .pagination li {
