@@ -12,7 +12,7 @@ describe('ADMIN CONTROLLER API ENDPOINT', () => {
             .get('/api/v1/accounts')
             .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.be.a('array');
+                res.body.should.be.a('object');
                 done();
              });
     });
@@ -47,7 +47,7 @@ describe('ADMIN CONTROLLER API ENDPOINT', () => {
         chai.request(app)
           .delete('/api/v1/accounts/1')
           .end((error, res) => {
-            res.should.have.status(201);
+            res.should.have.status(203);
             res.body.should.be.a('object');
             done();
           });

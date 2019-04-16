@@ -1,10 +1,20 @@
-import { users } from '../helper/utilities';
+import { users } from '../model/ultilities';
 import generateToken from "../middleware/genToken";
 require('dotenv').config();
 
 
+class UserController {
+    
 
-    export const signUp = (req, res) => {
+    /**
+     *
+     * @method signUp
+     * @description controller for the user signup API endpoint
+     * @param {object} req - the request object
+     * @param {object} res - the response object
+     * @memberof UserController
+     */
+    static signUp(req, res) {
         const { email, firstName, lastName, phoneNumber, password, type, isAdmin, } = req.body;
         const user = {
             id: users.length + 1,
@@ -34,14 +44,35 @@ require('dotenv').config();
         });
     };
     
-    export const getUser =(req, res) => {
+
+    /**
+     *
+     *
+     * @method getUsers
+     * @description controller for the getUsers Api Endpoint
+     * @param {object} req - the request object
+     * @param {object} res- the response object
+     * @memberof UserController
+     */
+    static getUsers(req, res) {
         res.status(201).json({
             status: '200',
             data: users,
         });
     };
 
-    export const login = (req, res) => {
+
+    /**
+     *
+     *
+     * @method login
+     * @description controller for the user login api endpoint
+     * @param {object} req - the request object
+     * @param {object} res - the response object
+     * @returns
+     * @memberof UserController
+     */
+    static login (req, res) {
         const { email, password, } = req.body;
         const currentUser = users.find(user => user.email === email && user.password === password);
         if (currentUser) {
@@ -66,3 +97,6 @@ require('dotenv').config();
             error: 'Username or Password is Incorrect',
         });
     };
+};
+
+export default UserController;
