@@ -52,10 +52,8 @@ body{
 .table {
     width: 100%;
     text-align: center;
-    background-color: #fff;
     margin: 10px 0 15px;
     padding: 10px;
-    border-bottom: 1px solid #d8bfd8;
 }
 
 td.credit {
@@ -170,7 +168,15 @@ ul.admin-btn {
     border: 1px solid transparent;
 }
 
-
+.view{
+    background-color: rgb(129, 190, 218);
+    border: 2px ;
+    border-radius: 30px;
+    width: 90%;
+    height: 90%;
+    color: white;
+    font-size:12px;
+}
 
 footer {
     background:#4484CE;

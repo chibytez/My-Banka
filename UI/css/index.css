@@ -41,7 +41,8 @@ body {
   }
   
   #header h1 {
-    /* border-bottom:2px solid #FF8C00; */
+   padding-top:10%;
+   
     margin-bottom:10px;
     margin-top:200px
   }
@@ -121,9 +122,8 @@ body {
   }
   #wooden{
     background: rgba(236, 227, 233, 0.6);
-    margin: 0 auto;
-    padding-top: auto;
-    padding-bottom: 5%;
+    margin: 0 auto; 
     width:40%;
+    height:200px;
   
   }

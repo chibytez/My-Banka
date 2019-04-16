@@ -40,10 +40,8 @@ table{
    
     width: 100%;
     text-align: center;
-    background-color: rgb(230, 238, 240);
     margin: 10px 0 15px;
     padding: 10px;
-    border-bottom: 1px solid #d8bfd8;
    }
 
      td{
@@ -70,13 +68,15 @@ table{
        background-color: rgb(7, 102, 11);
        border: 2px ;
        border-radius: 30px;
+       color: white;
 
    }
    .deactivate{
        background-color: rgb(206, 24, 24);
        border: 2px ;
        border-radius: 30px;
-   }
+       color: white;
+   } 
    .pending{
        background-color: rgb(134, 113, 112);
        border: 2px ;
@@ -86,7 +86,10 @@ table{
    select{
        border-radius: 30px;
        height: 80%;
-       background-color: #215033;
+       background-color: #4484CE;
+       color: white;
+       font-size:12px;
+
    }
 
    .pagination li {

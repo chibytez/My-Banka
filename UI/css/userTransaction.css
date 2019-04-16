@@ -3,7 +3,7 @@ body{
     height: 100%;
     margin:0;
     padding:0;
-    font-family: helvetica;
+    font-family: Helvetica;
 }
 
 
@@ -40,7 +40,7 @@ body{
 }
 
 .request-wrapper {
-    padding: 2%d 2%;
+    padding: 2% 2%;
     background: #F7F7F7;
     border-radius: 3px;
     width: 70%;
@@ -52,11 +52,32 @@ body{
 .table {
     width: 100%;
     text-align: center;
+    background-color: #fff;
     margin: 10px 0 15px;
     padding: 10px;
+    border-bottom: 1px solid #d8bfd8;
 }
 
+td.approved {
+    background: #aef0b2;
+    text-align: center;
+}
 
+td.pending {
+    background: #bebebe;
+    text-align: center;
+}
+
+td.resolved {
+    background: #d8bfd8;
+    text-align: center;
+}
+
+td.disapproved {
+    background: #b16464;
+    text-align: center;
+    color: white;
+}
 
 .table th {
     border-bottom: 1px solid #d8bfd8;
@@ -168,26 +189,45 @@ ul.admin-btn {
     border: 1px solid transparent;
 }
 
-.btn-credit {
+.btn-approve {
     background: #aef0b2;
     color: #363851;
 }
 
-.btn-credit:hover {
+.btn-approve:hover {
     background: #9ad99e;
     color: #363851;
 }
 
-.btn-debit {
-    background:  #e48b7c;
-    color: #313c47;
+.btn-disapprove {
+    border: 1px solid #ff4f4f;
+    color: #ff4f4f;
 }
 
-.btn-debit:hover {
+.btn-disapprove:hover {
+    background: #ff4f4f;
+    color: #fff;
+}
+
+.btn-resolve {
+    border: 1px solid #1e90ff;
+    color: #1e90ff;
+}
+
+.btn-resolve:hover {
     background: #1e90ff;
     color: #fff;
 }
 
+.view{
+    background-color: rgb(129, 190, 218);
+    border: 2px ;
+    border-radius: 30px;
+    width: 90%;
+    height: 90%;
+    color: white;
+    font-size:12px;
+}
 
 footer {
     background:#4484CE;

@@ -40,16 +40,14 @@ table{
    
     width: 100%;
     text-align: center;
-    background-color: rgb(230, 238, 240);
     margin: 10px 0 15px;
     padding: 10px;
-    border-bottom: 1px solid #d8bfd8;
    }
 
      td{
       text-align: center;
       height: 40px;
-       /* width: 16.6px; */
+       
        
    }
 
@@ -74,6 +72,9 @@ table{
        border-radius: 30px;
      height:70%;
      width: 40%;
+     color: white;
+     font-size:12px;
+
 
    }
 
@@ -83,6 +84,9 @@ table{
     border-radius: 30px;
     height:70%;
     width: 40%;
+    color: white;
+    font-size:12px;
+
  
  
 }
