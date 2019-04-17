@@ -1,7 +1,17 @@
-import { accounts } from '../helper/utilities';
+import { accounts } from '../model/ultilities';
+
+class AccountController{
 
 
-export const createAccount =(req, res) => {
+/**
+ *
+ *@method createAccount
+ * @description creates a new bank account
+ * @param {object} req - the request body
+ * @param {object} res - the response body
+ * @memberof AccountController
+ */
+static createAccount(req, res) {
     const account = {
         id: accounts.length + 1,
         firstName:req.body.firstName,
@@ -12,6 +22,13 @@ export const createAccount =(req, res) => {
         openingBalance:req.body.openingBalance
     }
     accounts.push(account);
-    res.status(201);
-    res.send(account);
+    res.status(201)
+    .json({
+status: '201',
+data: account,
+    });
+    
 };
+}
+
+export default AccountController;
