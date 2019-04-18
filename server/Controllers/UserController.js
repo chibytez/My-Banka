@@ -1,102 +1,118 @@
-import { users } from '../model/ultilities';
-import generateToken from "../middleware/genToken";
-require('dotenv').config();
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
+import Validator from 'validatorjs';
+
+import { signUpValidation, loginValidation } from '../helper/validations/validation';
+
+import user from '../model/database';
 
 
-class UserController {
-    
+class UserController{
 
-    /**
-     *
-     * @method signUp
-     * @description controller for the user signup API endpoint
-     * @param {object} req - the request object
-     * @param {object} res - the response object
-     * @memberof UserController
-     */
-    static signUp(req, res) {
-        const { email, firstName, lastName, phoneNumber, password, type, isAdmin, } = req.body;
-        const user = {
-            id: users.length + 1,
-            email,
-            firstName,
-            lastName,
-            phoneNumber,
-            password,
-            type,
-            isAdmin,
-        };
-        users.push(user);
-        const token = generateToken(user.id, user.email, user.isAdmin, user.type);
-        return res.header('x-access-token', token).status(201).json({
-            status: '201',
-            data: {
-                user: {
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    phoneNumber: user.phoneNumber,
-                    type: user.type,
-                    isAdmin: user.isAdmin,
-                },
-                token,
-            },
-        });
+/**
+  *
+  * @method signUp
+  * @description controller for the sign up api endpoint
+  * @param {object} req - the request body
+  * @param {object} res - the response body
+  * @memberof UserController
+  */
+ signUp (req, res) {
+  const {
+    firstName, lastName, email, password,
+  } = req.body;
+  const validation = new Validator({
+    firstName, lastName, password, email,
+  }, signUpValidation);
+  validation.passes(() => {
+    const sql = {
+      text: 'SELECT * FROM users WHERE email= $1',
+      values: [email],
     };
-    
-
-    /**
-     *
-     *
-     * @method getUsers
-     * @description controller for the getUsers Api Endpoint
-     * @param {object} req - the request object
-     * @param {object} res- the response object
-     * @memberof UserController
-     */
-    static getUsers(req, res) {
-        res.status(201).json({
-            status: '200',
-            data: users,
+    user.query(sql, (err, result) => {
+      if (result.rows.length > 0) {
+        return res.status(409).json({
+          errors: {
+            message: ['Email already exists'],
+          },
         });
-    };
-
-
-    /**
-     *
-     *
-     * @method login
-     * @description controller for the user login api endpoint
-     * @param {object} req - the request object
-     * @param {object} res - the response object
-     * @returns
-     * @memberof UserController
-     */
-    static login (req, res) {
-        const { email, password, } = req.body;
-        const currentUser = users.find(user => user.email === email && user.password === password);
-        if (currentUser) {
-            const token = generateToken(currentUser.id, currentUser.email, currentUser.isAdmin, currentUser.type);
-            return res.header('x-access-token', token).status(200).json({
-                status: '200',
-                data: {
-                    currentUser: {
-                        firstName: currentUser.firstName,
-                        lastName: currentUser.lastName,
-                        email: currentUser.email,
-                        phoneNumber: currentUser.phoneNumber,
-                        type: currentUser.type,
-                        isAdmin: currentUser.isAdmin,
-                    },
-                    token,
-                },
-            });
-        }
-        return res.status(404).json({
-            status: '404',
-            error: 'Username or Password is Incorrect',
+      }
+      bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(password, salt, (err, hash) => {
+          const query = {
+            text:
+              'INSERT INTO users(email, firstName, lastName, password, admin) VALUES($1, $2, $3, $4, $5 ) RETURNING *',
+            values: [email, firstName,lastName, hash, false],
+          };
+          user.query(query)
+            .then(data => jwt.sign({ user: data.rows[0].id }, process.env.SECRET_KEY, (err, token) => res.status(201).json({
+              success: true,
+              status: '201',
+              message: 'user registration was successful',
+              name: data.rows[0].name,
+              data: data.rows[0],
+              token,
+            })))
+            .catch(error => res.status(500).json({ message: error.message }));
         });
-    };
+      });
+    });
+  });
+  validation.fails(() => {
+    res.status(400).json(validation.errors);
+  });
 };
 
-export default UserController;
+/**
+  *
+  * @method login
+  * @description controller for the login api endpoint
+  * @param {object} req - the request body
+  * @param {object} res - the response body
+  * @memberof UserController
+  */
+login (req, res) {
+  const { email, password } = req.body;
+  const validation = new Validator({ password, email }, loginValidation);
+  validation.passes(() => {
+    const sql = {
+      text: 'SELECT * FROM users WHERE email= $1',
+      values: [email],
+    };
+    user.query(sql)
+      .then((result) => {
+        if (result && result.rows.length === 1) {
+          bcrypt.compare(password, result.rows[0].password, (error, match) => {
+            if (match) {
+              if (result && result.rows.length === 1) {
+                delete result.rows[0].password;
+                jwt.sign({ user: result.rows[0].id }, process.env.JWT_KEY, (err, token) =>
+                  res.status(201).json({
+                    status: '201',
+                  success: true,
+                  message: 'user successful login',
+                  name: result.rows[0].name,
+                  data: result.rows[0],
+                  token,
+                }));
+              } 
+              else {
+                res.status(400).json({
+                  success: false,
+                  message: 'Your email or password is incorrect',
+                });
+              }
+            }
+          });
+        }
+      })
+      .catch(error => res.status(500).json({ message: error.message }));
+  });
+  validation.fails(() => {
+    res.status(400).json(validation.errors);
+  });
+}
+}
+
+export default new UserController();
