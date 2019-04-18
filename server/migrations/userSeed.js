@@ -3,7 +3,7 @@ import db from '../model/database';
 
 const user = {
   text: 'INSERT INTO users(email, firstName,lastName, password, admin) VALUES($1, $2, $3, $4, $5 ) RETURNING id',
-  values: ['example@gmail.com', 'becky','uwah', '$2b$10$x0yAFrtQxs.f83ZKpb4iM.fwQlLAcc81GDhfDuFUimrNEqEDChXha', false],
+  values: ['beckyuwah@gmail.com', 'becky','uwah', '$2a$10$Ii38ZgakHcsaWmpPtA.8l.6KiM31XbHLZ0z.Bnlvb4pugUnDxgwv$2a$10$Ii38ZgakHcsaWmpPtA.8l.6KiM31XbHLZ0z.Bnlvb4pugUnDxgwv.', false],
 };
 
 db.query(user, (err, res) => {

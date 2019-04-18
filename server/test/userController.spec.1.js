@@ -11,7 +11,7 @@ describe('USER SIGNUP API ENDPOINT', () => {
     const user = {
       firstName: 'adam',
       lastName: 'Uwah',
-      email: 'adamsmsuwa@gmail.com',
+      email: 'adamsmuwa@gmail.com',
       password: 'chibyke',
       type: 'client',
       admin: false,
