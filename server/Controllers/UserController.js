@@ -50,7 +50,6 @@ class UserController{
               success: true,
               status: '201',
               message: 'user registration was successful',
-              name: data.rows[0].name,
               data: data.rows[0],
               token,
             })))
@@ -87,12 +86,11 @@ login (req, res) {
             if (match) {
               if (result && result.rows.length === 1) {
                 delete result.rows[0].password;
-                jwt.sign({ user: result.rows[0].id }, process.env.JWT_KEY, (err, token) =>
+                jwt.sign({ user: result.rows[0].id }, process.env.SECRET_KEY, (err, token) =>
                   res.status(201).json({
                     status: '201',
                   success: true,
                   message: 'user successful login',
-                  name: result.rows[0].name,
                   data: result.rows[0],
                   token,
                 }));

@@ -22,8 +22,8 @@ class AdminController {
     return res.status(200).json({
         status: '200',
         data: {
-          
           account: accounts.find((r) => r.accountNumber === account.accountNumber),
+          status: account.status,
         },
       });
 };
