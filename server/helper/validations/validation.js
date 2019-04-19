@@ -4,6 +4,7 @@ export const signUpValidation = {
     email: 'email|required',
     password: 'required|min:6|max:20',
   };
+  
   export const loginValidation = {
     email: 'email|required',
     password: 'required|min:6|max:20',
