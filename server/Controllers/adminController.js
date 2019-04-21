@@ -149,7 +149,7 @@ static async debitAccount (req, res) {
         const  {id }   = req.userInfo;
         const  { accountNumber }   = req.params;
         const  {amount }  =  req.body;
-  console.log('values:',id,accountNumber,amount);
+ 
   
         const AccountQuery = 'SELECT balance FROM accounts WHERE accountnumber = $1';
         const Account= await db.query(AccountQuery, [accountNumber]);

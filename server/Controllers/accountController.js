@@ -55,7 +55,29 @@ class AccountController{
   }  
   }
 
-
+ static async UserGetAllBankAccount (req,res){
+  const { email } = req.params;
+    try {
+        const accountQuery= 'select accounts.id, accounts.accountnumber, accounts.createdon,accounts.status, accounts.type, accounts.balance from accounts INNER JOIN users ON accounts.owner = users.id WHERE  users.email = $1';
+      const accounts = await db.query(accountQuery, [email]);
+      if (accounts.rows.length > 0) {
+        return res.status(200).json({
+          status: 200,
+          data: accounts.rows,
+        });
+      }
+   
+      return res.status(404).json({
+        status: 404,
+        error: 'account not found',
+      });
+    } catch (err) {
+      return res.status(500).json({
+        status: 500,
+        error: 'err detected',
+      });
+    }
+ }
 
 };
 export default AccountController;
