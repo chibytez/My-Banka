@@ -1,7 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
-import winston from 'winston';
 
 import routes from './server/Routes';
 
@@ -15,6 +14,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 routes(app);
 app.listen(port);
 
-winston.log('info', `App is listening on port ${port}`);
+console.log('info', `App is listening on port ${port}`);
 
 export default app;
