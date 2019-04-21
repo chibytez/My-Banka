@@ -20,7 +20,7 @@ db.query(user, (err, res) => {
     }
 
     const transaction = {
-      text: 'INSERT INTO transactions(createdOn, type, accountNumber, cashier, amount, oldBalance, newBalance) VALUES( NOW(), $1, $2, $3,$4, $5, $6)',
+      text: 'INSERT INTO transactions( type, accountNumber, cashier, amount, oldBalance, newBalance) VALUES( $1, $2, $3,$4, $5, $6)',
       values: [res.rows[0].id, 'credit', 1,  2, 34000.08, 45000.08, 79000.08],
     };
     db.query(transaction, (err, res) => {

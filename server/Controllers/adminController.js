@@ -1,3 +1,4 @@
+import db from '../model/database';
 import { accounts, transactions } from '../model/ultilities';
 
 class AdminController {
@@ -11,21 +12,34 @@ class AdminController {
      * @param object*} res - the response object
      * @memberof AdminController
      */
-    static activateDeactivateAccount(req, res) { 
-    const account = accounts.find((r) => r.accountNumber === parseInt(req.params.accountNumber));
-    if (!account) {
-        return res.status(404).
-        send('The account with the given Account Number was not found.');
-    }
-    account.accountNumber = req.body.accountNumber;
-    account.status= req.body.status;
-    return res.status(200).json({
-        status: '200',
-        data: {
-          account: accounts.find((r) => r.accountNumber === account.accountNumber),
-          status: account.status,
-        },
-      });
+    static  async activateDeactivateAccount(req, res) { 
+        try {
+            const { accountNumber } = req.params;
+            const { status } = req.body;
+            const findAccountQuery = 'SELECT * FROM accounts WHERE accountNumber = $1'; 
+            const foundAccount= await db.query(findAccountQuery, [accountNumber]);
+            if (foundAccount.rows.length === 0) {
+                return res.status(404).json({
+                  status: 404,
+                  error: 'account number not found',
+                });
+              }
+              const updateStatusQuery = 'UPDATE accounts SET status = $1 WHERE accountNumber = $2 returning *';
+              const updatedStatus= await db.query(updateStatusQuery, [status,accountNumber]);
+              return res.status(200).json({
+                status: 200,
+                data: {
+                  accountNumber,
+                  status: updatedStatus.rows[0].status,
+                },
+              });
+        } catch (err) {
+            return res.status(500).json({
+                status: 500,
+                err: 'Error detected',
+              });
+        }
+         
 };
 
 
@@ -37,21 +51,24 @@ class AdminController {
  * @param {object} res - the object body
  * @memberof AdminController
  */
-static deleteBankAccount(req, res) { 
-     const account = accounts.find((r) => r.accountNumber === parseInt(req.params.accountNumber));
-     if (!account) {
-         return res.status(404).
-         send('The request with the given ID was not found.');
-     }
+static async deleteBankAccount(req, res) { 
+    const deleteQuery = 'DELETE FROM accounts WHERE accountNumber =$1  returning *';
+    try {
+      const { rows } = await db.query(deleteQuery, [req.params.accountNumber]);
 
-     const index = accounts.indexOf(account);
-     accounts.splice(account, 1);
-
-     res.status(203)
-     .json({
-        status: '203',
+      if(!rows[0]) {
+        return res.status(404).send({'message': 'account not found'});
+      }
+      return res.status(200).json({
+        status: 200,
         message: 'Account successfully deleted',
       });
+    } catch(error) {
+       return res.status(500).json({
+                status: 500,
+                err: 'Error Detected',
+              });
+    }
  };
 
 
@@ -63,14 +80,29 @@ static deleteBankAccount(req, res) {
   * @param {object} res - the response body
   * @memberof AdminController
   */
- static  getAllAccounts  (req, res)  {
-    res.status(200).json({
-        status: '200',
-        data: accounts,
-      });
- };
-
-
+ static async getAllAccounts  (req, res)  {
+     try {
+        const allAccountQuery = ' select accounts.id, accounts.accountnumber, accounts.createdon, accounts.status, accounts.type, accounts.balance,users.firstname,users.lastname, users.email from accounts INNER JOIN users ON accounts.owner = users.id';
+        const allAccounts = await db.query(allAccountQuery, []);
+        if (allAccounts.rows.length > 0) {
+           return res.status(200).json({
+             status: 200,
+             data: allAccounts.rows,
+           });
+         }
+         return res.status(404).json({
+           status: 404,
+           error: 'account not found',
+         });
+     } catch (err) {
+        return res.status(500).json({
+            status: 500,
+            err: 'Error Detected',
+          });
+     }
+    
+}
+ 
 /**
   *
   * @method getAllAccountById
@@ -79,19 +111,31 @@ static deleteBankAccount(req, res) {
   * @param {object} res - the response body
   * @memberof AdminController
   */
- static getAccountById (req, res) {
-     const account = accounts.find((r) => r.accountNumber === parseInt(req.params.accountNumber));
-     if (!account) {
-         return res.status(404).send('The account with the given account number was not found.');
+ static async getAccountById (req, res) {
+     try {
+        const { accountNumber } = req.params;
+        const accountQuery = `select accounts.id, accounts.accountnumber, accounts.createdon,
+     accounts.status, accounts.type, accounts.balance,users.firstname,users.lastname,
+      users.email from accounts INNER JOIN users ON accounts.owner = users.id WHERE  
+      accounts.accountnumber = $1`;  
+      const accounts = await db.query(accountQuery, [accountNumber]);
+    if (accounts.rows.length > 0) {
+      return res.status(200).json({
+        status: 200,
+        data: accounts.rows,
+      });
     }
-  
-     res.status(200)
-     .json({
-         status : '200',
-         data: account,
-     })
+    return res.status(404).json({
+        status: 404,
+        error: 'account number not found',
+      });
+     } catch (error) {
+        return res.status(500).json({
+            status: 500,
+            error: 'Error Detected',
+     });
  };
-
+ };
  /**
   *
   * @method debitAccount
@@ -100,23 +144,57 @@ static deleteBankAccount(req, res) {
   * @param {object} res - the response body
   * @memberof AdminController
   */
-static debitAccount (req, res) {
-    const transaction = {
-        id: transactions.length + 1,
-        accountNumber : req.body.accountNumber ,
-        cashier: req.body.cashier,
-        amount : req.body.amount,
-        type : req.body.type,
-        accountBalance : req.body.accountBalance
-    }
-    transactions.push(transaction);
-    res.status(201)
-    .json({
-    status: '201',
-    message: 'account debitted',
-    data: transaction,
-    });
-};
+static async debitAccount (req, res) {
+    try {
+        const  {id }   = req.userInfo;
+        const  { accountNumber }   = req.params;
+        const  {amount }  =  req.body;
+  console.log('values:',id,accountNumber,amount);
+  
+        const AccountQuery = 'SELECT balance FROM accounts WHERE accountnumber = $1';
+        const Account= await db.query(AccountQuery, [accountNumber]);
+        if (Account.rows.length === 0) {
+          return res.status(404).json({
+            status: 404,
+            error: 'account number not found',
+          });         
+        } 
+        const oldBalance = Account.rows[0].balance
+        if (oldBalance < amount) {
+          return res.status(400).json({
+            status: 400,
+            error: 'insufficient account balance',
+          });
+        }
+        const newBalance = oldBalance - amount;
+        const values = ['debit', accountNumber, id, amount, oldBalance, newBalance]
+        const accountquery = `INSERT INTO transactions(type, accountnumber, cashier, amount, oldbalance, newbalance) VALUES($1, $2, $3, $4, $5, $6)returning *`;
+        const { rows } = await db.query(accountquery, values);
+       
+        
+        const updatebalanceQuery = 'UPDATE accounts SET balance = $1 WHERE accountNumber = $2';
+        await db.query(updatebalanceQuery, [newBalance,accountNumber]);
+        return res.status(200).json({
+                status: 200,
+                data: {
+                  transactionId: rows[0].id,
+                  accountNumber: rows[0].accountnumber,
+                  amount: rows[0].amount,
+                  cashier: rows[0].id,
+                  transactionType: rows[0].type,
+                  accountBalance: rows[0].newbalance,
+                },
+              });
+      } catch (err) {
+        return res.status(500).json({
+          status: 500,
+          err: 'error detected',
+        });
+      }
+ }
+
+ 
+
 
 /**
   *
@@ -126,23 +204,49 @@ static debitAccount (req, res) {
   * @param {object} res - the response body
   * @memberof AdminController
   */
-static creditAccount (req, res) {
-    const transaction = {
-        id: transactions.length + 1,
-        accountNumber : req.body.accountNumber ,
-        cashier: req.body.cashier,
-        amount : req.body.amount,
-        type : req.body.type,
-        accountBalance : req.body.accountBalance
-    }
-    transactions.push(transaction);
-    res.status(201)
-    .json({
-        status: '201',
-        message: 'account creditted',
-        data: transaction
-    })
-};
+static async creditAccount (req, res) {
+    try {
+        const { id } = req.userInfo;
+        const { accountNumber } = req.params;
+        const { amount, acc } = req.body;
+  
+        const AccountQuery = 'SELECT balance FROM accounts WHERE accountnumber = $1';
+        const Account= await db.query(AccountQuery, [accountNumber]);
+        if (Account.rows.length === 0) {
+          return res.status(404).json({
+            status: 404,
+            error: 'account number not found',
+          });
+        }
+        ;
+        const oldBalance = parseFloat(Account.rows[0].balance);
+        const newBalance = oldBalance + parseFloat(amount);
+        console.log('value:',acc, amount, newBalance, oldBalance,typeof newBalance, typeof oldBalance);
+        
+        const values = ['credit', accountNumber, id,amount,oldBalance,newBalance];
+        const accountquery = `INSERT INTO transactions(type, accountnumber, cashier,amount, oldbalance, newbalance) VALUES($1, $2, $3, $4, $5, $6)returning *`;
+        const { rows } = await db.query(accountquery, values);
+        const updatebalanceQuery = 'UPDATE accounts SET balance = $1 WHERE accountnumber = $2';
+        await db.query(updatebalanceQuery, [newBalance,accountNumber]);
+        return res.status(200).json({
+                status: 200,
+                data: {
+                  transactionId: rows[0].id,
+                  accountNumber: rows[0].accountnumber,
+                  amount: rows[0].amount,
+                  cashier: rows[0].cashier,
+                  transactionType: rows[0].type,
+                  accountBalance: rows[0].newbalance,
+                },
+              }); 
+    } catch (err) {
+        return res.status(500).json({
+            status: 500,
+            err: 'error detected',
+          });
+    };    
+    };
+
 
 };
 
