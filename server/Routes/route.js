@@ -11,13 +11,15 @@ import userAuth from '../middleware/verifyToken';
 const route = (app) => {
      app.post('/api/v1/auth/signUp', UserController.signUp);
       app.post('/api/v1/auth/login', UserController.login);
-     app.patch('/api/v1/account/:accountNumber', AdminController.activateDeactivateAccount);
-     app.delete('/api/v1/accounts/:accountNumber',AdminController.deleteBankAccount )
-     app.get('/api/v1/accounts', AdminController.getAllAccounts );
-     app.get('/api/v1/accounts/:accountNumber', AdminController.getAccountById);
+     app.patch('/api/v1/account/:accountNumber', verifyToken, userAuth, AdminController.activateDeactivateAccount);
+     app.delete('/api/v1/accounts/:accountNumber',verifyToken, userAuth, AdminController.deleteBankAccount )
+     app.get('/api/v1/accounts',verifyToken, userAuth, AdminController.getAllAccounts );
+     app.get('/api/v1/accounts/:accountNumber',verifyToken, userAuth, AdminController.getAccountById);
+     app.get('/api/v1/user/:email/accounts',verifyToken, userAuth, AccountController.UserGetAllBankAccount);
+     app.post('/api/v1/accounts', verifyToken, userAuth, accountValidation, AccountController.createBankAccount);
      app.post('/api/v1/transactions/:accountNumber/debit',verifyToken, userAuth,transactionValidation, AdminController.debitAccount );
      app.post('/api/v1/transactions/:accountNumber/credit', verifyToken, userAuth ,transactionValidation, AdminController.creditAccount);
-     app.post('/api/v1/accounts', verifyToken, userAuth, accountValidation, AccountController.createBankAccount);
+     
 
      
 };
