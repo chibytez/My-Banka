@@ -1,11 +1,7 @@
 
 import db from '../model/database';
-import { dbResults } from '../helper/ultility';
-
-
 
 class AccountController{
-
 
 /**
  *
