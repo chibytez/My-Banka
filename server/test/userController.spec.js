@@ -1,50 +1,94 @@
-import chai from 'chai';
 import chaiHttp from 'chai-http';
+import chai, { expect } from 'chai';
 import { describe } from 'mocha';
 import app from '../../app';
-
 chai.use(chaiHttp);
-chai.should()
+
+
 
 describe('USER SIGNUP API ENDPOINT', () => {
-  it('should signUp a user account on /signUp/ POST ', (done) => {
-    const user = {
-      firstName: 'adam',
-      lastName: 'Uwah',
-      email: 'adamsmsuwa@gmail.com',
-      password: 'chibyke',
-      type: 'client',
-      admin: false,
-        };
-        chai.request(app)
-          .post('/api/v1/auth/signUp')
-          .send(user)
-          .end((err, res) => {
-
-             res.should.have.status(201);
-            res.body.should.be.an('object');
-            res.body.should.have.property('token');
-            done();
-          });
+  describe('User sign up', () => {
+    it('should create a new user', (done) => {
+      const user = {
+        firstName: 'Chbuikchife',
+        lastName: 'Angku',
+        email: 'chibuihhhkbyke@gmail.com',
+        password: 'chibyke',
+        type: 'staff',
+        admin: true,
+      };
+      chai.request(app)
+      .post('/api/v1/auth/signUp')
+      .send(user)
+      .end((error, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body).to.have.property('status');
+          expect(res.body).to.have.property('data');
+          expect(res.body).to.have.property('token');
+          done();
         });
+  });
+  it('should not create a new user when the firstname is not provided', (done) => {
+    const user = {
+      lastName: 'chibyke',
+      email: 'becky@gmail.com',
+      password: '123def',
+    };
+    chai.request(app)
+      .post('/api/v1/auth/signUp')
+      .send(user)
+      .end((error, res) => {
+        expect(res.status).to.equal(400)
+        done();
+      });
+  });
+
+  it('should not create a new user when the lastname is not provided', (done) => {
+    const user = {
+      firstName: 'chibuike',
+      email: 'aniaku@gmail.com',
+      password: 'chibyke',
+    };
+    chai.request(app)
+    .post('/api/v1/auth/signUp')
+    .send(user)
+    .end((error, res) => {
+        expect(res.status).to.equal(400);
+      });
+      done();
+  });
 });
 
-describe('USER LOGIN API ENDPOINT', () => {
+describe('User login', () => {
+  
   it('should login a user account on /login/ POST ', (done) => {
     const user = {
-      email: 'beckyuwah@gmail.com',
+      email: 'chibuihhhkbyke@gmail.com',
       password: 'chibyke',
     }; 
      chai.request(app)
       .post('/api/v1/auth/login')
       .send(user)
       .end((err, res) => {
-        res.body.should.have.property('status');
-        res.body.status.should.equal("201");
-        res.body.should.have.property('data');
+        expect(res.status).to.equal(201);
+        expect(res.body).to.have.property('data');
+        expect(res.body).to.have.property('token');
         done();
       });
-  });
+});
 
+it('should not login user if the password is not provided', (done) => {
+  const user = {
+    email: 'chibyke@gmail.com',
+  };
+  chai.request(app)
+      .post('/api/v1/auth/login')
+      .send(user)
+      .end((err, res) => {
+      expect(res.status).to.equal(400);
+      done();
+    });
+});
+});
 
 });
