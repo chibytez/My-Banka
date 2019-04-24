@@ -1,17 +1,15 @@
+/* eslint-disable import/no-mutable-exports */
 import pg from 'pg';
+import 'dotenv/config';
 
-require('dotenv').config();
-
-const DATABASE_URL = {
-  user: process.env.DB_USERNAME,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-  max: 10,
-  idleTimeoutMillis: 30000,
-};
-
-const pool = new pg.Pool(DATABASE_URL);
+let pool;
+if (process.env.NODE_ENV === 'test') {
+  pool = new pg.Pool({ connectionString: process.env.TESTDB_URL });
+} else {
+  pool = new pg.Pool({
+    connectionString: process.env.DATABASE_URL || process.env.LOCALDB_URL,
+    ssl: false,
+  });
+}
 
 export default pool;

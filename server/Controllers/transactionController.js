@@ -1,6 +1,15 @@
 import db from '../model/database';
 
 class TransactionController{
+
+/**
+ *
+ *@method userGetAccountTransactionHistory
+ * @description  user should get his transaction history
+ * @param {array} req -the request body
+ * @param {array} res - the response body
+ * @memberof TransactionController
+ */  
 static async userGetAccountTransactionHistory (req,res){
 try {
    const { accountNumber } = req.params;
@@ -25,6 +34,14 @@ if (accounts.rows.length > 0) {
 }
 };
 
+/**
+ *
+ *@method userGetTransactionById
+ * @description  user should get transaction by id
+ * @param { object } req -the request object
+ * @param { object } res - the response body
+ * @memberof TransactionController
+ */ 
 static async userGetTransactionById(req,res){
 try {
     const { id } = req.params;

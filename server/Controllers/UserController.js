@@ -23,7 +23,7 @@ class UserController{
     const {
       firstName, lastName, email, password,
     } = req.body;
-    console.log('result',firstName);
+   
     const validation = new Validator({
       firstName, lastName, password, email,
     }, signUpValidation);
@@ -52,7 +52,7 @@ class UserController{
             };
             const userResult = await db.query(sql);
   
-              jwt.sign({ user: userResult.rows[0].id }, process.env.SECRET_KEY, (err, token) => 
+              jwt.sign({ user: userResult.rows[0].id,}, process.env.SECRET_KEY, (err, token) => 
                res.status(201).json({
                 success: true,
                 status: '201',
@@ -100,9 +100,8 @@ static async login (req, res) {
               if (match) {
                 if (result && result.rows.length === 1) {
                   delete result.rows[0].password;
-                  jwt.sign({ user: result.rows[0].id }, process.env.SECRET_KEY, (err, token) =>
+                  jwt.sign({ user: result.rows[0].id,}, process.env.SECRET_KEY, (err, token) =>
                     res.status(201).json({
-                      status: '201',
                     success: true,
                     message: 'user successful login',
                     data: result.rows[0],
