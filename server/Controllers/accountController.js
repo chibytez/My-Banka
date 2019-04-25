@@ -20,17 +20,20 @@ static async createBankAccount(req, res) {
     const { user  } = req.userInfo;
    
   const { 
-     type, status, balance 
+     type, balance 
     } = req.body;
 
+
+
     const accountNumber = Math.floor(1000000000 + Math.random() * 90000000);
-const validation = new Validator({
-  type ,status,balance},accountValidation)
+    const validation = new Validator({
+  type,balance},accountValidation)
   validation.passes(async() => {
     const query = { 
-        text: 'INSERT INTO accounts( owner, accountNumber, type, status,balance) VALUES( $1, $2, $3, $4, $5) RETURNING *',
-        values: [user, accountNumber, type, status, balance],
+        text: 'INSERT INTO accounts( owner, accountNumber, type, status, balance) VALUES( $1, $2, $3, $4, $5) RETURNING *',
+        values: [user, accountNumber, type, 'active', balance],
       };
+console.log();
 
   const result = await db.query(query);
   

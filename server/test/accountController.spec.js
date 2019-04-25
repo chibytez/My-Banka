@@ -6,16 +6,16 @@ import app from '../../app';
 import db from '../model/database';
 chai.use(chaiHttp);
 
- let email = 'chibuifkebyke@gmail.com';
+ let email = 'chibuikeaniaku@gmail.com';
  let accountNumber = 45667546;
  let token;
 
 async function createAdmin() {
-    const query = `INSERT INTO users(firstName, lastname, email, password, admin)
-      VALUES($1, $2, $3, $4, $5) RETURNING email, firstname, lastname, id`;
+    const query = `INSERT INTO users(firstName, lastname, email, password, admin,type)
+      VALUES($1, $2, $3, $4, $5, $6) RETURNING email, firstname, lastname, id`;
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash('chibyke', salt);
-    const values = ['Aniaku', 'Chibuike', 'aniakuchibuike@gmail.com', hash, true];
+    const values = ['Aniaku', 'Chibuike', 'aniakuchibuike@gmail.com', hash, true, 'staff'];
     return db.query(query, values);
   };
 
@@ -27,27 +27,44 @@ async function createAdmin() {
 
       it('should get login and return admin token', (done) => {
         const user = {
-          email: 'chibuifkebyke@gmail.com',
+          email: 'chibuikeaniaku@gmail.com',
           password: 'chibyke',
         };
         chai.request(app)
         .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
-            token = res.body.token;
+            token = res.body.token;  
             expect(res.status).to.equal(201);
             expect(res.body).to.have.property('data');
             expect(res.body).to.have.property('token');
             done();
           });
       });
+
+    //   it('should login a user account on /login/ POST ', (done) => {
+    //     const user = {
+    //       email: 'chibuikeaniaku@gmail.com',
+    //       password: 'chibyke',
+    //     }; 
+    //      chai.request(app)
+    //       .post('/api/v1/auth/login')
+    //       .send(user)
+    //       .end((err, res) => {
+    //         expect(res.status).to.equal(201);
+    //         expect(res.body).to.have.property('data');
+    //         expect(res.body).to.have.property('token');
+    //         console.log('usertesttoken',res.body.token)
+    //         token = res.body.token;
+    //         done();
+    //       });
+    // });
     
       describe('/POST create account', () => {
         it('should create a new account', (done) => {
           const accounts = {
             type: 'current',
-            balance: 100,
-            status: 'active,'
+            balance: 10000,
           };
           chai.request(app)
         .post('/api/v1/accounts')
@@ -172,23 +189,23 @@ async function createAdmin() {
       });
     });
     describe('/DELETE  account by account Number', () => {
-      it('should delete a specific account detail', (done) => {
-        chai.request(app)
-        .delete(`/api/v1/accounts/${accountNumber}`)
-          .set('token', token)
-          .end((err, res) => {
-            expect(res.status).to.equal(200);
-            expect(res.body).to.have.property('status');
-           ;
-            done();
-          });
-      });
+      // it('should delete a specific account detail', (done) => {
+      //   chai.request(app)
+      //   .delete(`/api/v1/accounts/${accountNumber}`)
+      //     .set('token', token)
+      //     .end((err, res) => {
+      //       expect(res.status).to.equal(200);
+      //       expect(res.body).to.have.property('status');
+      //      ;
+      //       done();
+      //     });
+      // });
       it('should fail to delte accounts when the number is not correct', (done) => {
         chai.request(app)
         .delete(`/api/v1/accounts/${accountNumber}1`)
           .set('token', token)
           .end((err, res) => {
-            expect(res.status).to.equal(500);
+            expect(res.status).to.equal(404);
             done();
           });
       });

@@ -11,11 +11,11 @@ let accountNumber = 45667546 ;
 let id = 1;
 
 async function createAdmin() {
-    const query = `INSERT INTO users(firstName, lastname, email, password, admin)
-    VALUES($1, $2, $3, $4, $5) RETURNING email, firstname, lastname, id`;
+    const query = `INSERT INTO users(firstName, lastname, email, password, admin,type)
+    VALUES($1, $2, $3, $4, $5, $6) RETURNING email, firstname, lastname, id`;
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash('chibyke', salt);
-    const values = ['Chibuike', 'Aniaku', 'aniakuchibuike@gmail.com', hash, true];
+    const values = ['Chibuike', 'Aniaku', 'aniakuchibuike@gmail.com', hash, true, 'staff'];
     return db.query(query, values);
   }
 
@@ -26,7 +26,7 @@ async function createAdmin() {
 
     it('should get login and return admin token', (done) => {
         const user = {
-          email: 'chibuifkebyke@gmail.com',
+          email:  'chibuikeaniaku@gmail.com',
           password: 'chibyke',
         };
         chai.request(app)

@@ -18,6 +18,7 @@ class AdminController {
         try {
             const { accountNumber } = req.params;
             const { status } = req.body;
+            if(status ==='active' || status === 'dormant'){
             const findAccountQuery = 'SELECT * FROM accounts WHERE accountNumber = $1'; 
             const foundAccount= await db.query(findAccountQuery, [accountNumber]);
             if (foundAccount.rows.length === 0) {
@@ -35,6 +36,10 @@ class AdminController {
                   status: updatedStatus.rows[0].status,
                 },
               });
+            } return res.status(400).json({
+              stats:400,
+              error:'status can only be active or dormant',
+            });
         } catch (err) {
             return res.status(500).json({
                 status: 500,
@@ -164,7 +169,7 @@ static async debitAccount (req, res) {
     try {
         const  {user }   = req.userInfo;
         const  { accountNumber }   = req.params;
-        const  {amount }  =  req.body;
+        const  { amount }  =  req.body;
  
   const validation = new Validator({
     amount},transactionValidation);
@@ -178,7 +183,7 @@ static async debitAccount (req, res) {
           });         
         } 
         const oldBalance = Account.rows[0].balance
-        if (oldBalance < amount) {
+        if ( parseFloat(oldBalance) < parseFloat(amount)) {
           return res.status(400).json({
             status: 400,
             error: 'insufficient account balance',

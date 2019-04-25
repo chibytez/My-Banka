@@ -47,12 +47,12 @@ class UserController{
           bcrypt.hash(password, salt, async(err, hash) => { 
             const sql = {
               text:
-                'INSERT INTO users(email, firstName, lastName, password, admin) VALUES($1, $2, $3, $4, $5 ) RETURNING *',
-              values: [email, firstName,lastName, hash, false],
+                'INSERT INTO users(email, firstName, lastName, password, admin, type) VALUES($1, $2, $3, $4, $5,$6 ) RETURNING *',
+              values: [email, firstName,lastName, hash, false, 'client'],
             };
             const userResult = await db.query(sql);
   
-              jwt.sign({ user: userResult.rows[0].id,}, process.env.SECRET_KEY, (err, token) => 
+              jwt.sign({ user: userResult.rows[0].id,admin:userResult.rows[0].admin}, process.env.SECRET_KEY, (err, token) => 
                res.status(201).json({
                 success: true,
                 status: '201',
@@ -86,7 +86,7 @@ class UserController{
   */
 static async login (req, res) {
   try {
-    const { email, password } = req.body;
+    const { email, password } = req.body; 
     const validation = new Validator({ password, email }, loginValidation);
     validation.passes(async() => {
       const sql = {
@@ -94,13 +94,13 @@ static async login (req, res) {
         values: [email],
       };
       const result = await db.query(sql)
-        
           if (result && result.rows.length === 1) {
             bcrypt.compare(password, result.rows[0].password, async(error, match) => {
               if (match) {
                 if (result && result.rows.length === 1) {
                   delete result.rows[0].password;
-                  jwt.sign({ user: result.rows[0].id,}, process.env.SECRET_KEY, (err, token) =>
+                  
+                  jwt.sign({ user: result.rows[0].id, admin:result.rows[0].admin}, process.env.SECRET_KEY, (err, token) =>
                     res.status(201).json({
                     success: true,
                     message: 'user successful login',

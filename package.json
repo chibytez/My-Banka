@@ -8,12 +8,20 @@
     "start:dev": " nodemon  app.js --exec babel-node",
     "start": "baapp.js",
     "createTable": " node -r @babel/register server/migrations/createTable.js",
+    "createTable:test": "cross-env NODE_ENV=test babel-node server/migrations/createTable.js",
+    "accountTable": "node -r @babel/register server/migrations/account.js",
+    "accountTable:test": "cross-env NODE_ENV=test babel-node server/migrations/account.js",
+    "userTable": "node -r @babel/register server/migrations/user.js",
+    "userTable:test": "cross-env NODE_ENV=test babel-node server/migrations/user.js",
     "dropTable": " node -r @babel/register server/migrations/dropTable.js",
-    "userSeed": " node -r @babel/register server/migrations/userSeed.js",
+    "dropTable:test": " cross-env NODE_ENV=test babel-node server/migrations/dropTable.js",
+    "userSeed": " npm run accountTable && npm run userTable && npm run transactionTable",
+    "userSeed:test": " npm run accountTable:test && npm run userTable:test && npm run transactionTable:test",
+    "transactionTable": " node -r @babel/register server/migrations/transaction.js",
+    "transactionTable:test": " cross-env NODE_ENV=test babel-node server/migrations/transaction.js",
     "adminSeed": " node -r @babel/register server/migrations/adminSeed.js",
     "migration": "npm run dropTable && npm run createTable",
-    "mig-test": "cross-env NODE_ENV=test babel-node server/migrations/createTable.js server/migrations/dropTable.js  ",
-    "seeder": "npm run userSeed && npm run adminSeed",
+    "mig-test": "npm run dropTable:test && npm run createTable:test && npm run userSeed:test ",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov  | coveralls "
   },
   "repository": {
@@ -41,6 +49,7 @@
     "coveralls": "^3.0.3",
     "cross-env": "^5.2.0",
     "dotenv": "^7.0.0",
+    "eslint": "^5.16.0",
     "express": "^4.16.4",
     "express-validator": "^5.3.1",
     "jol": "^0.1.0",
@@ -55,7 +64,6 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
-    "eslint": "^5.16.0",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^13.3.0"
   }
