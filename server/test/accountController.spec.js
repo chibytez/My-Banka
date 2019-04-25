@@ -189,17 +189,17 @@ async function createAdmin() {
       });
     });
     describe('/DELETE  account by account Number', () => {
-      // it('should delete a specific account detail', (done) => {
-      //   chai.request(app)
-      //   .delete(`/api/v1/accounts/${accountNumber}`)
-      //     .set('token', token)
-      //     .end((err, res) => {
-      //       expect(res.status).to.equal(200);
-      //       expect(res.body).to.have.property('status');
-      //      ;
-      //       done();
-      //     });
-      // });
+      it('should delete a specific account detail', (done) => {
+        chai.request(app)
+        .delete(`/api/v1/accounts/${accountNumber}`)
+          .set('token', token)
+          .end((err, res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body).to.have.property('status');
+           ;
+            done();
+          });
+      });
       it('should fail to delte accounts when the number is not correct', (done) => {
         chai.request(app)
         .delete(`/api/v1/accounts/${accountNumber}1`)
