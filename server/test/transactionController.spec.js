@@ -7,16 +7,16 @@ import db from '../model/database';
 chai.use(chaiHttp);
 
 let token;
-let accountNumber = 45667546 ;
+let accountNumber = 4567890;
 let id = 1;
 
 async function createAdmin() {
-    const query = `INSERT INTO users(firstName, lastname, email, password, admin,type)
-    VALUES($1, $2, $3, $4, $5, $6) RETURNING email, firstname, lastname, id`;
-    const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash('chibyke', salt);
-    const values = ['Chibuike', 'Aniaku', 'aniakuchibuike@gmail.com', hash, true, 'staff'];
-    return db.query(query, values);
+  const query = `INSERT INTO users(firstName, lastname, email, password, admin,type)
+  VALUES($1, $2, $3, $4, $5, $6) RETURNING email, firstname, lastname, id`;
+const salt = await bcrypt.genSalt(10);
+const hash = await bcrypt.hash('chibyke', salt);
+const values = ['Aniaku', 'Chibuike', 'aniakunnakeziee@gmail.com', hash, true, 'staff'];
+return db.query(query, values);
   }
 
   describe('tests for Transaction controller', () => {
@@ -26,13 +26,14 @@ async function createAdmin() {
 
     it('should get login and return admin token', (done) => {
         const user = {
-          email:  'chibuikeaniaku@gmail.com',
-          password: 'chibyke',
+            email: 'chibuikeaniaku@gmail.com',
+            password: 'chibyke',
         };
         chai.request(app)
         .post('/api/v1/auth/login')
           .send(user)
           .end((err, res) => {
+                 
             token = res.body.token;
             expect(res.status).to.equal(201);
             expect(res.body).to.have.property('data');
@@ -42,16 +43,16 @@ async function createAdmin() {
       });
 
       it('should create a new account', (done) => {
-        const account = {
+        const accounts = {
           type: 'current',
           balance: 100,
-          status: 'active',
         };
        chai.request(app)
         .post('/api/v1/accounts')
-        .set('token',token)
-        .send(account)
-        .end((err, res) => {
+        .set('token', token)
+      .send(accounts)
+      .end((err, res) => {
+       
            expect(res.status).to.equal(201);
               expect(res.body).to.have.property('success');
               expect(res.body).to.have.property('message');
@@ -66,7 +67,7 @@ async function createAdmin() {
                 amount: 100,
               };
               chai.request(app)
-              .post(`/api/v1/transactions/${accountNumber}/credit`)
+              .post(`/api/v1/transactions/${45667546}/credit`)
                 .set('token', token)
                 .send(transact)
                 .end((err, res) => {
@@ -98,7 +99,7 @@ describe('/POST debit Transaction', () => {
         amount: 100,
       };
       chai.request(app)
-      .post(`/api/v1/transactions/${accountNumber}/debit`)
+      .post(`/api/v1/transactions/${45667546}/debit`)
         .set('token', token)
         .send(transact)
         .end((err, res) => {
@@ -130,7 +131,7 @@ it('should fail to debit an account when account number is incorrect', (done) =>
 describe('/GET  a specific transaction by account ID', () => {
     it('should get a specific transaction detail', (done) => {
       chai.request(app)
-      .get(`/api/v1/transactions/${id}`)
+      .get(`/api/v1/transactions/${1}`)
         .set('token', token)
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -154,7 +155,7 @@ describe('/GET  a specific transaction by account ID', () => {
 describe('/GET  a specific account transaction history', () => {
     it('should get a user Account transaction history', (done) => {
       chai.request(app)
-      .get(`/api/v1/accounts/${accountNumber}/transactions`)
+      .get(`/api/v1/accounts/${4566678}/transactions`)
         .set('token', token)
         .end((err, res) => {
           expect(res.status).to.equal(200);

@@ -33,7 +33,7 @@ static async createBankAccount(req, res) {
         text: 'INSERT INTO accounts( owner, accountNumber, type, status, balance) VALUES( $1, $2, $3, $4, $5) RETURNING *',
         values: [user, accountNumber, type, 'active', balance],
       };
-console.log();
+
 
   const result = await db.query(query);
   
@@ -41,7 +41,7 @@ console.log();
     return res.status(404).json({
       message: "no user found"
     })
-  };
+  }
     const sql = {
       text: 'SELECT Acc.accountNumber, U.firstName, U.lastName, U.email,Acc.type, Acc.balance FROM accounts Acc INNER JOIN users U ON Acc.owner = U.id where U.id =$1',
       values: [user],
@@ -119,7 +119,7 @@ validation.fails(() => {
             status: 200,
             data: accounts.rows,
           });
-        };
+        }
         return res.status(404).json({
           status: 404,
           error: 'No accound with the given account number',
@@ -130,7 +130,7 @@ validation.fails(() => {
           error: 'Error detected',
         });
   }
-  };
+  }
 
-};
+}
 export default AccountController;
