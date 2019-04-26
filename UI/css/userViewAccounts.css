@@ -52,22 +52,32 @@ body{
 .table {
     width: 100%;
     text-align: center;
+    background-color: #fff;
     margin: 10px 0 15px;
     padding: 10px;
+    border-bottom: 1px solid #d8bfd8;
 }
 
-td.credit {
-    color: #43ad4a;
+td.approved {
+    background: #aef0b2;
     text-align: center;
 }
 
-td.debit {
-    color: #aa1a1a;
+td.pending {
+    background: #bebebe;
     text-align: center;
 }
 
+td.resolved {
+    background: #d8bfd8;
+    text-align: center;
+}
 
-
+td.disapproved {
+    background: #b16464;
+    text-align: center;
+    color: white;
+}
 
 .table th {
     border-bottom: 1px solid #d8bfd8;
@@ -154,8 +164,19 @@ ul.admin-btn {
     background: #17192a;
 }
 
+.btn-edit {
+    background: #d8bfd8;
+    color: #363851;
+}
 
+.btn-delete:hover {
+    background: #7e3b3b;
+}
 
+.btn-delete {
+    color: white;
+    background: #b16464;
+}
 
 .btn-default:hover {
     background: #111130;
@@ -168,14 +189,44 @@ ul.admin-btn {
     border: 1px solid transparent;
 }
 
+.btn-approve {
+    background: #aef0b2;
+    color: #363851;
+}
+
+.btn-approve:hover {
+    background: #9ad99e;
+    color: #363851;
+}
+
+.btn-disapprove {
+    border: 1px solid #ff4f4f;
+    color: #ff4f4f;
+}
+
+.btn-disapprove:hover {
+    background: #ff4f4f;
+    color: #fff;
+}
+
+.btn-resolve {
+    border: 1px solid #1e90ff;
+    color: #1e90ff;
+}
+
+.btn-resolve:hover {
+    background: #1e90ff;
+    color: #fff;
+}
 .view{
-    background-color: rgb(129, 190, 218);
+    background-color: rgb(73, 152, 189);
+    font-size:large;
     border: 2px ;
     border-radius: 30px;
-    width: 90%;
+    width: 100%;
     height: 90%;
     color: white;
-    font-size:20px;
+    
 }
 
 footer {

@@ -1,4 +1,5 @@
-import { accounts, transactions } from '../model/ultilities';
+import db from '../model/database';
+
 
 class AdminController {
 
@@ -11,48 +12,43 @@ class AdminController {
      * @param object*} res - the response object
      * @memberof AdminController
      */
-    static activateDeactivateAccount(req, res) { 
-    const account = accounts.find((r) => r.accountNumber === parseInt(req.params.accountNumber));
-    if (!account) {
-        return res.status(404).
-        send('The account with the given Account Number was not found.');
-    }
-    account.accountNumber = req.body.accountNumber;
-    account.status= req.body.status;
-    return res.status(200).json({
-        status: '200',
-        data: {
-          
-          account: accounts.find((r) => r.accountNumber === account.accountNumber),
-        },
-      });
-};
+    static  async activateDeactivateAccount(req, res) { 
+        try {
+            const { accountNumber } = req.params;
+            const { status } = req.body;
+            if(status ==='active' || status === 'dormant'){
+            const findAccountQuery = 'SELECT * FROM accounts WHERE accountNumber = $1'; 
+            const foundAccount= await db.query(findAccountQuery, [accountNumber]);
+            if (foundAccount.rows.length === 0) {
+                return res.status(404).json({
+                  status: 404,
+                  error: 'account number not found',
+                });
+              }
+              const updateStatusQuery = 'UPDATE accounts SET status = $1 WHERE accountNumber = $2 returning *';
+              const updatedStatus= await db.query(updateStatusQuery, [status,accountNumber]);
+              return res.status(200).json({
+                status: 200,
+                data: {
+                  accountNumber,
+                  status: updatedStatus.rows[0].status,
+                },
+              });
+            } return res.status(400).json({
+              stats:400,
+              error:'status can only be active or dormant',
+            });
+        } catch (err) {
+            return res.status(500).json({
+                status: 500,
+                err: 'Error detected',
+              });
+        }
+         
+}
 
 
-/**
- *
- *@method deletebankAccount
- * @description  deletes an account
- * @param {object} req -the request body
- * @param {object} res - the object body
- * @memberof AdminController
- */
-static deleteBankAccount(req, res) { 
-     const account = accounts.find((r) => r.accountNumber === parseInt(req.params.accountNumber));
-     if (!account) {
-         return res.status(404).
-         send('The request with the given ID was not found.');
-     }
 
-     const index = accounts.indexOf(account);
-     accounts.splice(account, 1);
-
-     res.status(203)
-     .json({
-        status: '203',
-        message: 'Account successfully deleted',
-      });
- };
 
 
  /**
@@ -63,87 +59,104 @@ static deleteBankAccount(req, res) {
   * @param {object} res - the response body
   * @memberof AdminController
   */
- static  getAllAccounts  (req, res)  {
-    res.status(200).json({
-        status: '200',
-        data: accounts,
+ static async getAllAccounts  (req, res)  {
+  try {
+    let allAccounts;
+    let allAccountQuery;
+    let statustype 
+
+    if (req.query.status === undefined) {
+      allAccountQuery = 'select accounts.id, accounts.accountnumber, accounts.createdon,accounts.status, accounts.type, accounts.balance,users.email from accounts INNER JOIN users ON accounts.owner = users.id';
+      allAccounts = await db.query(allAccountQuery, []);
+      statustype = ""
+    } else {
+       const { status } = req.query;
+      allAccountQuery = 'select accounts.id, accounts.accountnumber, accounts.createdon, accounts.status, accounts.type, accounts.balance, users.email from accounts INNER JOIN users ON accounts.owner = users.id WHERE accounts.status = $1';
+      allAccounts = await db.query(allAccountQuery, [status]);
+      statustype = status;  
+    }
+    if (allAccounts.rows.length > 0) {
+      return res.status(200).json({
+        status: 200,
+        data: allAccounts.rows,
       });
- };
-
-
-/**
-  *
-  * @method getAllAccountById
-  * @description it can get a users accounts by account number
-  * @param {object} req - the request body
-  * @param {object} res - the response body
-  * @memberof AdminController
-  */
- static getAccountById (req, res) {
-     const account = accounts.find((r) => r.accountNumber === parseInt(req.params.accountNumber));
-     if (!account) {
-         return res.status(404).send('The account with the given account number was not found.');
     }
-  
-     res.status(200)
-     .json({
-         status : '200',
-         data: account,
-     })
- };
-
- /**
-  *
-  * @method debitAccount
-  * @description it can debit a user account
-  * @param {object} req - the request body
-  * @param {object} res - the response body
-  * @memberof AdminController
-  */
-static debitAccount (req, res) {
-    const transaction = {
-        id: transactions.length + 1,
-        accountNumber : req.body.accountNumber ,
-        cashier: req.body.cashier,
-        amount : req.body.amount,
-        type : req.body.type,
-        accountBalance : req.body.accountBalance
-    }
-    transactions.push(transaction);
-    res.status(201)
-    .json({
-    status: '201',
-    message: 'account debitted',
-    data: transaction,
+   
+    return res.status(404).json({
+      status: 404,
+      error: `no ${statustype} account found`,
     });
-};
+  } catch (err) {
+    return res.status(500).json({
+      status: 500,
+      error: 'Err Detected',
+    });
+  }
+}
 
+ 
 /**
   *
-  * @method creditAccount
-  * @description it can credit a user account
+  * @method getAllAccountByAccountNumber
+  * @description it can get a users accounts by idx
   * @param {object} req - the request body
   * @param {object} res - the response body
   * @memberof AdminController
   */
-static creditAccount (req, res) {
-    const transaction = {
-        id: transactions.length + 1,
-        accountNumber : req.body.accountNumber ,
-        cashier: req.body.cashier,
-        amount : req.body.amount,
-        type : req.body.type,
-        accountBalance : req.body.accountBalance
+ static async getAccountByAccountNumber (req, res) {
+     try {
+        const { accountNumber } = req.params;
+        const accountQuery = `select accounts.id, accounts.accountnumber, accounts.createdon,
+     accounts.status, accounts.type, accounts.balance,users.firstname,users.lastname,
+      users.email from accounts INNER JOIN users ON accounts.owner = users.id WHERE  
+      accounts.accountnumber = $1`;  
+      const accounts = await db.query(accountQuery, [accountNumber]);
+     
+    if (accounts.rows.length > 0) {
+      return res.status(200).json({
+        status: 200,
+        data: accounts.rows,
+      });
     }
-    transactions.push(transaction);
-    res.status(201)
-    .json({
-        status: '201',
-        message: 'account creditted',
-        data: transaction
-    })
-};
+    return res.status(404).json({
+        status: 404,
+        error: 'account number not found',
+      });
+     } catch (error) {
+        return res.status(500).json({
+            status: 500,
+            error: 'Error Detected',
+     });
+ }
+ }
+ /**
+ *
+ *@method deletebankAccount
+ * @description  deletes an account
+ * @param {object} req -the request body
+ * @param {object} res - the response body
+ * @memberof AdminController
+ */
+static async deleteBankAccount(req, res) { 
+  const deleteQuery = 'DELETE FROM accounts WHERE accountNumber =$1  returning *';
+  try {
+    const { rows } = await db.query(deleteQuery, [req.params.accountNumber]);
 
-};
+    if(!rows[0]) {
+      return res.status(404).send({'message': 'account not found'});
+    }
+    return res.status(200).json({
+      status: 200,
+      message: 'Account successfully deleted',
+    });
+  } catch(error) {
+     return res.status(500).json({
+              status: 500,
+              err: 'Error Detected',
+            });
+  }
+}
+
+  }
 
 export default AdminController;

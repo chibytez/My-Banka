@@ -4,7 +4,21 @@ node_js:
 install:
   - npm install
   
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c "CREATE USER chibuike WITH PASSWORD 'chibyke';" -U postgres
+
+  - npm run mig-test
+ 
 script:
  - npm test
+
+after_script:
+   - npm run coverage
+   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
 after_success:
 - npm run coverage
