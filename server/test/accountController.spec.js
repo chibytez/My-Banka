@@ -6,18 +6,18 @@ import app from '../../app';
 import db from '../model/database';
 chai.use(chaiHttp);
 
- let email = 'chibuifkebyke@gmail.com';
- let accountNumber = 45667546;
+ let email ;
+ let accountNumber;
  let token;
 
 async function createAdmin() {
-    const query = `INSERT INTO users(firstName, lastname, email, password, admin)
-      VALUES($1, $2, $3, $4, $5) RETURNING email, firstname, lastname, id`;
+    const query = `INSERT INTO users(firstName, lastname, email, password, admin,type)
+      VALUES($1, $2, $3, $4, $5, $6) RETURNING email, firstname, lastname, id`;
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash('chibyke', salt);
-    const values = ['Aniaku', 'Chibuike', 'aniakuchibuike@gmail.com', hash, true];
+    const values = ['Aniaku', 'Chibuike', 'aniakuchibuike@gmail.com', hash, true, 'staff'];
     return db.query(query, values);
-  };
+  }
 
   describe('tests for Account controller', () => {
 
@@ -27,34 +27,35 @@ async function createAdmin() {
 
       it('should get login and return admin token', (done) => {
         const user = {
-          email: 'chibuifkebyke@gmail.com',
-          password: 'chibyke',
+          email: 'aniakuchibuike@gmail.com',
+      password: 'chibyke',
         };
         chai.request(app)
         .post('/api/v1/auth/login')
         .send(user)
         .end((err, res) => {
-            token = res.body.token;
+            token = res.body.token;  
             expect(res.status).to.equal(201);
             expect(res.body).to.have.property('data');
             expect(res.body).to.have.property('token');
             done();
           });
       });
+
     
       describe('/POST create account', () => {
         it('should create a new account', (done) => {
           const accounts = {
             type: 'current',
-            balance: 100,
-            status: 'active,'
+            balance: 10000,
           };
           chai.request(app)
         .post('/api/v1/accounts')
         .set('token',token)
         .send(accounts)
         .end((err, res) => {
-          
+          accountNumber = parseInt(res.body.account.accountnumber, 10);
+          email = res.body.account.email;
               expect(res.status).to.equal(201);
               expect(res.body).to.have.property('success');
               expect(res.body).to.have.property('message');
@@ -62,9 +63,8 @@ async function createAdmin() {
               done();
             });
         });
-    
-     
-      });
+
+        });
 
       describe('/PATCH  account', () => {
         it('should change account status', (done) => {
@@ -76,6 +76,7 @@ async function createAdmin() {
             .set('token', token)
             .send(account)
             .end((err, res) => {
+              
               expect(res.status).to.equal(200);
               expect(res.body).to.have.property('status');
               expect(res.body).to.have.property('data');
@@ -105,7 +106,7 @@ async function createAdmin() {
           done();
         });
     });
-
+  })
     describe('/GET Admin GET ALL Accounts By Account Number', () =>{
       it('should get a specific account detail by email', (done) => {
         chai.request(app)
@@ -152,7 +153,7 @@ async function createAdmin() {
         .get(`/api/v1/accounts/${accountNumber}1`)
           .set('token', token)
           .end((err, res) => {
-            expect(res.status).to.equal(404);
+            expect(res.status).to.equal(500);
             done();
           });
       });
@@ -179,7 +180,6 @@ async function createAdmin() {
           .end((err, res) => {
             expect(res.status).to.equal(200);
             expect(res.body).to.have.property('status');
-           ;
             done();
           });
       });
@@ -195,5 +195,5 @@ async function createAdmin() {
   });
 
 });
-});
+
            

@@ -19,12 +19,10 @@ class TransactionEmail {
     emailer.setApiKey(process.env.EMAILGRID_API_KEY);
 
     const detail = {
-      // to: email,
+    
       to: 'aniakuchibuike@gmail.com',
       from: 'aniakuchibuike@gmail.com',
-      // subject: 'Sending with SendGrid is Fun',
-      // html: 'hello, It is working',
-      // templateId: 'd-df9db67da07a4ad2b0320d741fa652fe',
+     
       dynamic_template_data: {
         subject: `Banka ${type} Alert`,
         firstname,
@@ -55,20 +53,12 @@ class TransactionEmail {
       email,
     } = userInfo;
     emailer.setApiKey(process.env.EMAILGRID_API_KEY);
-    console.log('userInfo', createdon,
-    accountnumber,
-    firstname,
-    amount,
-    balance,
-    type,
-    email, )
+    
 
 const msg = {
   to: 'beckyuwah@gmail.com',
   from: 'aniakuchibuike@gmail.com',
-  // subject: 'Sending with SendGrid is Fun',
-  // text: 'and easy to do anywhere, even with Node.js',
-  // html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+  
   templateId: 'd-df9db67da07a4ad2b0320d741fa652fe',
       dynamic_template_data: {
         subject: `Banka ${type} Alert`,

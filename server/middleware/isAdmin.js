@@ -1,5 +1,7 @@
 export default (req, res, next) => {
-    if (req.headers.token) {
+  const {admin} = req.userInfo;
+
+    if (admin) {
       return next();
     }
     res.status(403)

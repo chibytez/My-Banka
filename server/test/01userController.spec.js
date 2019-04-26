@@ -12,7 +12,7 @@ describe('USER SIGNUP API ENDPOINT', () => {
       const user = {
         firstName: 'Chbuikchife',
         lastName: 'Angku',
-        email: 'chibuihhhkbyke@gmail.com',
+        email: 'chibuikeaniaku@gmail.com',
         password: 'chibyke',
         type: 'staff',
         admin: true,
@@ -63,7 +63,7 @@ describe('User login', () => {
   
   it('should login a user account on /login/ POST ', (done) => {
     const user = {
-      email: 'chibuihhhkbyke@gmail.com',
+      email: 'chibuikeaniaku@gmail.com',
       password: 'chibyke',
     }; 
      chai.request(app)
