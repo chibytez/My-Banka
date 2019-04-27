@@ -1,7 +1,7 @@
 
 import db from '../model/database';
 import Validator from 'validatorjs';
-import { accountValidation } from '../helper/validations/validation';
+import { accountValidation } from '../helper/validations/accountValidation';
 
 class AccountController{
 
@@ -23,12 +23,10 @@ static async createBankAccount(req, res) {
      type, balance 
     } = req.body;
 
-
-
-    const accountNumber = Math.floor(1000000000 + Math.random() * 90000000);
-    const validation = new Validator({
-  type,balance},accountValidation)
-  validation.passes(async() => {
+   const accountNumber = Math.floor(1000000000 + Math.random() * 90000000);
+   const validation = new Validator({
+    type, balance }, accountValidation);
+    validation.passes( async() => { 
     const query = { 
         text: 'INSERT INTO accounts( owner, accountNumber, type, status, balance) VALUES( $1, $2, $3, $4, $5) RETURNING *',
         values: [user, accountNumber, type, 'active', balance],
@@ -43,7 +41,7 @@ static async createBankAccount(req, res) {
     })
   }
     const sql = {
-      text: 'SELECT Acc.accountNumber, U.firstName, U.lastName, U.email,Acc.type, Acc.balance FROM accounts Acc INNER JOIN users U ON Acc.owner = U.id where U.id =$1',
+      text: 'SELECT Acc.accountNumber, U.firstName, U.lastName, U.email, Acc.type, Acc.balance FROM accounts Acc LEFT JOIN users U ON Acc.owner = U.id where U.id =$1',
       values: [user],
     }
  

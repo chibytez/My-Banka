@@ -6,7 +6,7 @@ import TransactionController  from "../Controllers/transactionController";
 import verifyToken from '../middleware/userAuth';
 import userAuth from '../middleware/verifyToken';
 import isAdmin from '../middleware/isAdmin';
-// import isCashier from '../middleware/isCashier'
+import isCashier from '../middleware/isCashier'
 
 
 const route = (app) => {
@@ -24,9 +24,9 @@ const route = (app) => {
      app.post('/api/v1/accounts', verifyToken, userAuth, AccountController.createBankAccount);
 
      // transaction route
-     app.post('/api/v1/transactions/:accountNumber/debit',verifyToken, userAuth, TransactionController.debitAccount );
-     app.post('/api/v1/transactions/:accountNumber/credit', verifyToken, userAuth, TransactionController.creditAccount);
-     app.get('/api/v1/accounts/:accountNumber/transactions', verifyToken, userAuth,TransactionController.userGetAccountTransactionHistory )
+     app.post('/api/v1/transactions/:accountNumber/debit',verifyToken, userAuth,isCashier, TransactionController.debitAccount );
+     app.post('/api/v1/transactions/:accountNumber/credit', verifyToken, userAuth,isCashier, TransactionController.creditAccount);
+     app.get('/api/v1/accounts/:accountNumber/transctions', verifyToken, userAuth,TransactionController.userGetAccountTransactionHistory )
      app.get ('/api/v1/transactions/:id',verifyToken, userAuth, TransactionController.userGetTransactionById)
      
 };

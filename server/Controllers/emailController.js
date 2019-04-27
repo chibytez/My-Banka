@@ -21,7 +21,7 @@ class TransactionEmail {
     const detail = {
     
       to: 'aniakuchibuike@gmail.com',
-      from: 'aniakuchibuike@gmail.com',
+      from: 'clasicsolng@gmail.com',
      
       dynamic_template_data: {
         subject: `Banka ${type} Alert`,
@@ -56,8 +56,8 @@ class TransactionEmail {
     
 
 const msg = {
-  to: 'beckyuwah@gmail.com',
-  from: 'aniakuchibuike@gmail.com',
+  to: 'aniakuchibuike@gmail.com',
+  from: 'clasicsolng@gmail.com',
   
   templateId: 'd-df9db67da07a4ad2b0320d741fa652fe',
       dynamic_template_data: {
