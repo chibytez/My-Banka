@@ -2,6 +2,11 @@ import db from '../model/database';
 
 
 
-const values = ['admin', 'admin', 'chibuifkebyke@gmail.com', 'chibyke', 'true', 'staff'];
-   const user =  db.query('INSERT into users(firstName, lastName, email, password, admin, type)VALUES($1,$2,$3,$4,$5, $6)', values);
+let values = ['admin', 'admin', 'chibuifkebyke@gmail.com', 'Chibyke8%', 'true', 'staff'];
+   let user =  db.query('INSERT into users(firstName, lastName, email, password, admin, type)VALUES($1,$2,$3,$4,$5, $6)', values);
+   
+    values = ['chibuike', 'aniaku', 'chibyke@gmail.com', 'Chibyke8%', 'false', 'staff'];
+    user =  db.query('INSERT into users(firstName, lastName, email, password, admin, type)VALUES($1,$2,$3,$4,$5, $6)', values);
 
+    values = ['becky', 'uwah', 'beckyuwah@gmail.com', 'Chibyke8%', 'false', 'client'];
+    user =  db.query('INSERT into users(firstName, lastName, email, password, admin, type)VALUES($1,$2,$3,$4,$5, $6)', values);
