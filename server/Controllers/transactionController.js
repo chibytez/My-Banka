@@ -27,6 +27,7 @@ if (accounts.rows.length > 0) {
       data: accounts.rows,
     });
   }
+  
   return res.status(404).json({
     status: 404,
     error: 'no transaction history for this account',

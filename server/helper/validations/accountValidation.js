@@ -1,6 +1,5 @@
 
 export const accountValidation = {
   type: 'required|min:4|alpha',
-  balance: 'required|min:3|numeric',
-};
-
+  balance: 'required|min:4|numeric',
+}

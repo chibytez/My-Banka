@@ -6,7 +6,8 @@ import TransactionController  from "../Controllers/transactionController";
 import verifyToken from '../middleware/userAuth';
 import userAuth from '../middleware/verifyToken';
 import isAdmin from '../middleware/isAdmin';
-// import isCashier from '../middleware/isCashier'
+ import isCashier from '../middleware/isCashier';
+import userId from '../middleware/userId';
 
 
 const route = (app) => {
@@ -19,15 +20,17 @@ const route = (app) => {
      app.delete('/api/v1/accounts/:accountNumber',verifyToken, userAuth,isAdmin, AdminController.deleteBankAccount )
      app.get('/api/v1/accounts',verifyToken, userAuth,isAdmin, AdminController.getAllAccounts );
      app.get('/api/v1/accounts/:accountNumber',verifyToken, userAuth, isAdmin, AdminController.getAccountByAccountNumber);
-     app.get('/api/v1/user/:email/accounts',verifyToken, userAuth, AccountController.UserGetAllBankAccount);
-     app.get('/api/v1/accounts/:accountNumber',verifyToken, userAuth,AccountController.userViewSpecificAccount);
+     app.post('/api/v1/auth/makeAdmin',verifyToken, userAuth,isAdmin, AdminController.makeAdmin);
+     app.get('/api/v1/user/:email/accounts',verifyToken, userAuth, userId.userGetAccountNumbers, AccountController.UserGetAllBankAccount);
+     app.get('/api/v1/account/:accountNumber',verifyToken,userAuth,userId.userGetSpecificAccount, AccountController.userViewSpecificAccount);
      app.post('/api/v1/accounts', verifyToken, userAuth, AccountController.createBankAccount);
+    
 
      // transaction route
-     app.post('/api/v1/transactions/:accountNumber/debit',verifyToken, userAuth, TransactionController.debitAccount );
-     app.post('/api/v1/transactions/:accountNumber/credit', verifyToken, userAuth, TransactionController.creditAccount);
-     app.get('/api/v1/accounts/:accountNumber/transactions', verifyToken, userAuth,TransactionController.userGetAccountTransactionHistory )
-     app.get ('/api/v1/transactions/:id',verifyToken, userAuth, TransactionController.userGetTransactionById)
+     app.post('/api/v1/transactions/:accountNumber/debit',verifyToken, userAuth,isCashier, TransactionController.debitAccount );
+     app.post('/api/v1/transactions/:accountNumber/credit', verifyToken, userAuth, isCashier, TransactionController.creditAccount);
+     app.get('/api/v1/accounts/:accountNumber/transctions', verifyToken, userAuth,userId.userGetTransactionHistory ,TransactionController.userGetAccountTransactionHistory )
+     app.get ('/api/v1/transactions/:id',verifyToken, userAuth, userId.userGTransactionById, TransactionController.userGetTransactionById)
      
 };
 
