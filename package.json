@@ -20,7 +20,7 @@
     "transactionTable": " node -r @babel/register server/migrations/transaction.js",
     "transactionTable:test": " cross-env NODE_ENV=test babel-node server/migrations/transaction.js",
     "adminSeed": " node -r @babel/register server/migrations/adminSeed.js",
-    "migration": "npm run dropTable && npm run createTable",
+    "migration": "npm run dropTable && npm run createTable && npm run userSeed",
     "mig-test": "npm run dropTable:test && npm run createTable:test && npm run userSeed:test ",
     "coverage": "nyc npm test && nyc report --reporter=text-lcov  | coveralls "
   },
