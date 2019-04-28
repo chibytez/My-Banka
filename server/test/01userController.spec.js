@@ -13,7 +13,7 @@ describe('USER SIGNUP API ENDPOINT', () => {
         firstName: 'Chbuikchife',
         lastName: 'Angku',
         email: 'chibuikeaniaku@gmail.com',
-        password: 'chibyke',
+        password: 'Chibyke8%',
         type: 'staff',
         admin: true,
       };
@@ -64,7 +64,7 @@ describe('User login', () => {
   it('should login a user account on /login/ POST ', (done) => {
     const user = {
       email: 'chibuikeaniaku@gmail.com',
-      password: 'chibyke',
+      password: 'Chibyke8%',
     }; 
      chai.request(app)
       .post('/api/v1/auth/login')
@@ -90,5 +90,4 @@ it('should not login user if the password is not provided', (done) => {
     });
 });
 });
-
 });

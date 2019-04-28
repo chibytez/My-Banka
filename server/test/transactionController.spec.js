@@ -27,7 +27,7 @@ return db.query(query, values);
     it('should get login and return admin token', (done) => {
         const user = {
             email: 'chibuikeaniaku@gmail.com',
-            password: 'chibyke',
+            password: 'Chibyke8%',
         };
         chai.request(app)
         .post('/api/v1/auth/login')
@@ -131,7 +131,7 @@ it('should fail to debit an account when account number is incorrect', (done) =>
 describe('/GET  a specific transaction by account ID', () => {
     it('should get a specific transaction detail', (done) => {
       chai.request(app)
-      .get(`/api/v1/transactions/${1}`)
+      .get(`/api/v1/transactions/${2}`)
         .set('token', token)
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -153,23 +153,24 @@ describe('/GET  a specific transaction by account ID', () => {
 });
 
 describe('/GET  a specific account transaction history', () => {
-    it('should get a user Account transaction history', (done) => {
-      chai.request(app)
-      .get(`/api/v1/accounts/${4566678}/transactions`)
-        .set('token', token)
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('status');
-          expect(res.body).to.have.property('data');
-          done();
-        });
-    });
+  it('should get a user Account transaction history', (done) => {
+    chai.request(app)
+    .get('/api/v1/accounts/${accountNumber}/transactions')
+      .set('token', token)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.property('status');
+        expect(res.body).to.have.property('data');
+        done();
+      });
+  });
+  
     it('should fail to fetch transaction when the number is not correct', (done) => {
         chai.request(app)
         .get(`/api/v1/accounts/${accountNumber}o/transactions`)
           .set('token', token)
           .end((err, res) => {
-            expect(res.status).to.equal(500);
+            expect(res.status).to.equal(404);
             done();
           });
       });
