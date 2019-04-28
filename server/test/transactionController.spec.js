@@ -15,7 +15,7 @@ async function createAdmin() {
   VALUES($1, $2, $3, $4, $5, $6) RETURNING email, firstname, lastname, id`;
 const salt = await bcrypt.genSalt(10);
 const hash = await bcrypt.hash('chibyke', salt);
-const values = ['Aniaku', 'Chibuike', 'aniakunnakeziee@gmail.com', hash, true, 'staff'];
+const values = ['Aniaku', 'Chibuike', 'aniakunnakeziee@gmail.com', hash, false, 'staff'];
 return db.query(query, values);
   }
 
@@ -24,10 +24,10 @@ return db.query(query, values);
       await createAdmin();
     });
 
-    it('should get login and return admin token', (done) => {
+    it('should get login and return a token', (done) => {
         const user = {
-            email: 'chibuikeaniaku@gmail.com',
-            password: 'Chibyke8%',
+            email: 'aniakunnakeziee@gmail.com',
+            password: 'chibyke',
         };
         chai.request(app)
         .post('/api/v1/auth/login')
@@ -131,7 +131,7 @@ it('should fail to debit an account when account number is incorrect', (done) =>
 describe('/GET  a specific transaction by account ID', () => {
     it('should get a specific transaction detail', (done) => {
       chai.request(app)
-      .get(`/api/v1/transactions/${2}`)
+      .get(`/api/v1/transactions/${id}`)
         .set('token', token)
         .end((err, res) => {
           expect(res.status).to.equal(200);
@@ -153,17 +153,7 @@ describe('/GET  a specific transaction by account ID', () => {
 });
 
 describe('/GET  a specific account transaction history', () => {
-  it('should get a user Account transaction history', (done) => {
-    chai.request(app)
-    .get('/api/v1/accounts/${accountNumber}/transactions')
-      .set('token', token)
-      .end((err, res) => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.have.property('status');
-        expect(res.body).to.have.property('data');
-        done();
-      });
-  });
+ 
   
     it('should fail to fetch transaction when the number is not correct', (done) => {
         chai.request(app)
