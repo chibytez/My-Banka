@@ -1,4 +1,10 @@
 import db from '../model/database';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
+import Validator from 'validatorjs';
+
+import { signUpValidation } from '../helper/validations/validation';
 
 
 class AdminController {
@@ -157,6 +163,71 @@ static async deleteBankAccount(req, res) {
   }
 }
 
+ /**
+  *
+  * @method makeAdmin
+  * @description admin can made a user an admin 
+  * @param {object} req - the request body
+  * @param {object} res - the response body
+  * @memberof AdminController
+  */
+ static async makeAdmin (req, res) {
+  try {
+   const {
+     firstName, lastName, email, password,
+   } = req.body;
+  
+   const validation = new Validator({
+     firstName, lastName, password, email,
+   }, signUpValidation);
+ 
+   validation.passes( async() => { 
+     const sql = {
+       text: 'SELECT * FROM users WHERE email= $1',
+       values: [email],
+     };
+ 
+     const result = await db.query(sql, [email]);
+ 
+       if (result.rows.length > 0) {
+         return res.status(409).json({
+           errors: {
+             message: ['Email already exists'],
+           },
+         });
+       }
+       bcrypt.genSalt(10, (err, salt) => {
+         bcrypt.hash(password, salt, async(err, hash) => { 
+           const sql = {
+             text:
+               'INSERT INTO users(email, firstName, lastName, password, admin, type) VALUES($1, $2, $3, $4, $5,$6 ) RETURNING *',
+             values: [email, firstName,lastName, hash, true, 'staff'],
+           };
+           const userResult = await db.query(sql);
+ 
+             jwt.sign({ user: userResult.rows[0].id,admin:userResult.rows[0].admin, cashier: userResult.rows[0]}, process.env.SECRET_KEY, (err, token) => 
+              res.status(201).json({
+               success: true,
+               status: '201',
+               message: 'admin registration was successful',
+               data: userResult.rows,
+               token,
+             }))
+         });
+       });
+   });
+ 
+   validation.fails(() => {
+     res.status(400).json(validation.errors);
+   });
+  } catch (err) {
+   return res.status(500).json({
+     status: 500,
+     error: err.message,
+   });
+  }
+ 
+}
   }
 
 export default AdminController;

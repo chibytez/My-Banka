@@ -29,6 +29,12 @@ class UserController{
     }, signUpValidation);
   
     validation.passes( async() => { 
+      if(!password.match(/^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/)){
+        return res.status(201).json({
+          message: 'password must contain a capital letter,small letter,number and special character',
+        })
+      }
+      
       const sql = {
         text: 'SELECT * FROM users WHERE email= $1',
         values: [email],
@@ -43,6 +49,7 @@ class UserController{
             },
           });
         }
+
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(password, salt, async(err, hash) => { 
             const sql = {
@@ -62,8 +69,8 @@ class UserController{
               }))
           });
         });
+     
     });
-  
     validation.fails(() => {
       res.status(400).json(validation.errors);
     });
@@ -74,7 +81,7 @@ class UserController{
     });
    }
   
-};
+}
 
 /**
   *

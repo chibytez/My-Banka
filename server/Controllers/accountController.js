@@ -2,6 +2,7 @@
 import db from '../model/database';
 import Validator from 'validatorjs';
 import { accountValidation } from '../helper/validations/accountValidation';
+import { log } from 'util';
 
 class AccountController{
 
@@ -17,7 +18,7 @@ static async createBankAccount(req, res) {
 
   
   try {
-    const { user  } = req.userInfo;
+    const { user,admin  } = req.userInfo;
    
   const { 
      type, balance 
@@ -27,6 +28,7 @@ static async createBankAccount(req, res) {
    const validation = new Validator({
     type, balance }, accountValidation);
     validation.passes( async() => { 
+  
     const query = { 
         text: 'INSERT INTO accounts( owner, accountNumber, type, status, balance) VALUES( $1, $2, $3, $4, $5) RETURNING *',
         values: [user, accountNumber, type, 'active', balance],
@@ -48,11 +50,10 @@ static async createBankAccount(req, res) {
   
   const accountSelect = await db.query(sql);
 
-
  return  res.status(201).json({
     success: true,
     message: 'account Successfully created',
-    account: accountSelect.rows[0],  
+    account: result.rows[0],  
 
   })
 
@@ -107,11 +108,13 @@ validation.fails(() => {
  * @param {object} res - the object body
  * @memberof AccountController
  */
- static async userViewSpecificAccount(req,res){
+static async userViewSpecificAccount (req,res){
   try {
       const { accountNumber } = req.params;
-      const accountQuery = 'select id, createdon, accountnumber,email, type, status, balance FROM accounts  WHERE accountnumber = $1';
+      const accountQuery = `select id, createdon, accountnumber, type, status, 
+                            balance FROM accounts  WHERE accountnumber = $1`;    
       const accounts = await db.query(accountQuery, [accountNumber]);
+ 
       if (accounts.rows.length > 0) {
           return res.status(200).json({
             status: 200,
@@ -120,7 +123,7 @@ validation.fails(() => {
         }
         return res.status(404).json({
           status: 404,
-          error: 'No accound with the given account number',
+          error: 'Account not found',
         });
   } catch (error) {
       return res.status(500).json({
@@ -129,6 +132,5 @@ validation.fails(() => {
         });
   }
   }
-
 }
 export default AccountController;
