@@ -27,8 +27,8 @@ const route = (app) => {
     
 
      // transaction route
-     app.post('/api/v1/transactions/:accountNumber/debit',verifyToken, userAuth, TransactionController.debitAccount );
-     app.post('/api/v1/transactions/:accountNumber/credit', verifyToken, userAuth, TransactionController.creditAccount);
+     app.post('/api/v1/transactions/:accountNumber/debit',verifyToken, userAuth,isCashier, TransactionController.debitAccount );
+     app.post('/api/v1/transactions/:accountNumber/credit', verifyToken, userAuth,isCashier, TransactionController.creditAccount);
      app.get('/api/v1/accounts/:accountNumber/transctions', verifyToken, userAuth,userId.userGetTransactionHistory ,TransactionController.userGetAccountTransactionHistory )
      app.get ('/api/v1/transactions/:id',verifyToken, userAuth, userId.userGTransactionById, TransactionController.userGetTransactionById)
      
