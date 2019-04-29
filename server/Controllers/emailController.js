@@ -57,7 +57,7 @@ class TransactionEmail {
 
 const msg = {
   to: email,
-  from: 'aniakuchibuike@gmail.com.com',
+  from: 'aniakuchibuike@gmail.com',
   
   templateId: 'd-df9db67da07a4ad2b0320d741fa652fe',
       dynamic_template_data: {
