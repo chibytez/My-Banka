@@ -76,11 +76,14 @@ validation.fails(() => {
  * @param {array} res - the object body
  * @memberof AccountController
  */
- static async UserGetAllBankAccount (req,res){
+static async UserGetAllBankAccount (req,res){
+  console.log('came to userId');
   const { email } = req.params;
+  console.log('email', email);
     try {
         const accountQuery= 'select accounts.id, accounts.accountnumber, accounts.createdon,accounts.status, accounts.type, accounts.balance from accounts INNER JOIN users ON accounts.owner = users.id WHERE  users.email = $1';
       const accounts = await db.query(accountQuery, [email]);
+      console.log('account',accounts, accounts.rows.length);
       if (accounts.rows.length > 0) {
         return res.status(200).json({
           status: 200,
@@ -99,6 +102,7 @@ validation.fails(() => {
       });
     }
  }  
+
 
  /**
  *
