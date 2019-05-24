@@ -122,11 +122,11 @@ body {
     }
   }
   #wooden{
-    background: rgba(236, 227, 233, 0.6);
+   color: azure;
     margin: 0 auto; 
     padding:auto;
     height:250px;
-    width:fit-content;
+    width:300px;
 
   
   }
