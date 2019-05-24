@@ -64,7 +64,14 @@ class UserController{
                 success: true,
                 status: '201',
                 message: 'user registration was successful',
-                data: userResult.rows,
+                data: {
+                  id:userResult.rows[0].id,
+                  firstName: userResult.rows[0].firstname,
+                  lastName: userResult.rows[0].lastname,
+                  email,
+                  type: userResult.rows[0].type,
+                  admin:userResult.rows[0].admin,
+                },
                 token,
               }))
           });
